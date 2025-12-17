@@ -9,7 +9,6 @@ export default function Scene2Flashback() {
         <section className="relative w-screen h-screen flex-shrink-0 flex items-center justify-center bg-neutral-900 border-l border-neutral-800">
             <div className="container mx-auto px-4 md:px-12 grid grid-cols-1 md:grid-cols-2 gap-12 items-center h-full">
 
-                {/* Left: Text Content */}
                 <motion.div
                     initial={{ opacity: 0, x: -50 }}
                     whileInView={{ opacity: 1, x: 0 }}
@@ -42,14 +41,12 @@ export default function Scene2Flashback() {
                     </div>
                 </motion.div>
 
-                {/* Right: Visual / Terminal */}
                 <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="relative h-[50vh] w-full bg-black rounded-lg border border-neutral-700 shadow-2xl overflow-hidden font-mono text-sm md:text-base"
                 >
-                    {/* Terminal Header */}
                     <div className="flex items-center gap-2 px-4 py-2 bg-neutral-800 border-b border-neutral-700">
                         <div className="w-3 h-3 rounded-full bg-red-500" />
                         <div className="w-3 h-3 rounded-full bg-yellow-500" />
@@ -57,7 +54,6 @@ export default function Scene2Flashback() {
                         <span className="ml-2 text-xs text-neutral-400">anil@machine:~/profile</span>
                     </div>
 
-                    {/* Terminal Body */}
                     <div className="p-6 text-green-400 space-y-2">
                         <p>
                             <span className="text-purple-400">const</span> <span className="text-yellow-300">hero</span> = &#123;
@@ -70,7 +66,6 @@ export default function Scene2Flashback() {
                         <p className="animate-pulse">_</p>
                     </div>
 
-                    {/* Scanline effect */}
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/5 to-transparent h-2 w-full animate-scanline pointer-events-none" />
                 </motion.div>
 

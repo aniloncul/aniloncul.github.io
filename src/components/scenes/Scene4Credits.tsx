@@ -8,7 +8,6 @@ export default function Scene4Credits() {
     return (
         <section className="relative w-screen h-screen flex-shrink-0 flex items-center justify-center bg-black border-l border-neutral-800">
 
-            {/* Rolling Credits Effect Background */}
             <div className="absolute inset-0 overflow-hidden opacity-10 pointer-events-none select-none">
                 <div className="animate-rolling-credits text-center space-y-12 text-neutral-500 font-bebas text-4xl">
                     <p>DIRECTED BY ANIL ONCUL</p>
@@ -34,7 +33,6 @@ export default function Scene4Credits() {
                 </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-start">
-                    {/* Booking / Contact */}
                     <div className="bg-neutral-900 border border-neutral-800 p-8 rounded-lg shadow-2xl">
                         <h3 className="text-2xl font-bebas text-white mb-6 tracking-wide">CAST ME FOR YOUR PROJECT</h3>
 
@@ -49,7 +47,6 @@ export default function Scene4Credits() {
                         </a>
                     </div>
 
-                    {/* Socials */}
                     <div className="flex flex-col items-center justify-center h-full space-y-8">
                         <h3 className="text-2xl font-bebas text-white tracking-wide">FOLLOW THE JOURNEY</h3>
                         <div className="flex gap-8">

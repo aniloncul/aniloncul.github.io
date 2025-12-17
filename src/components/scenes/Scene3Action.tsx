@@ -11,7 +11,7 @@ const projects = [
         role: "Full Stack",
         type: "Web App",
         status: "Now Streaming",
-        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop", // placeholder
+        image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2070&auto=format&fit=crop",
         link: "#",
         desc: "A revolutionary AI platform for data synthesis."
     },
@@ -21,7 +21,7 @@ const projects = [
         role: "Frontend Arch",
         type: "E-Commerce",
         status: "Now Streaming",
-        image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2064&auto=format&fit=crop", // placeholder
+        image: "https://images.unsplash.com/photo-1558655146-d09347e92766?q=80&w=2064&auto=format&fit=crop",
         link: "#",
         desc: "Next-gen shopping experience with 3D product views."
     },
@@ -31,7 +31,7 @@ const projects = [
         role: "Mobile Dev",
         type: "Mobile App",
         status: "Coming Soon",
-        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop", // placeholder
+        image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2070&auto=format&fit=crop",
         link: "#",
         desc: "Second brain for your pocket. IOS & Android."
     }
@@ -57,19 +57,16 @@ export default function Scene3Action() {
                         onHoverEnd={() => setHoveredId(null)}
                         className="relative group min-w-[300px] md:min-w-[350px] h-[500px] bg-neutral-900 rounded-lg overflow-hidden border border-neutral-800 shadow-2xl transition-all duration-300 hover:scale-105 hover:border-red-600/50 snap-center"
                     >
-                        {/* Poster Image / Video Placeholder */}
                         <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110 opacity-60 group-hover:opacity-40"
                             style={{ backgroundImage: `url(${project.image})` }}
                         />
 
-                        {/* Hover Video Overlay (Simulated) */}
                         {hoveredId === project.id && (
                             <div className="absolute inset-0 bg-black/50 flex items-center justify-center backdrop-blur-sm animate-in fade-in">
                                 <Play className="text-white w-16 h-16 opacity-80" />
                             </div>
                         )}
 
-                        {/* Content Overlay */}
                         <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/90 to-transparent">
                             <div className="flex justify-between items-start mb-2">
                                 <span className="px-2 py-1 text-[10px] font-mono uppercase bg-red-600 text-white rounded-sm">

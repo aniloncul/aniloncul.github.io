@@ -9,12 +9,12 @@ interface IntroSequenceProps {
 }
 
 export default function IntroSequence({ onComplete }: IntroSequenceProps) {
-    const [count, setCount] = useState(5); // Start closer to action for better UX, usually 10 but 5 is snappier
+    const [count, setCount] = useState(5);
     const [isExiting, setIsExiting] = useState(false);
 
     const handleComplete = useCallback(() => {
         setIsExiting(true);
-        setTimeout(onComplete, 800); // Wait for exit animation
+        setTimeout(onComplete, 800);
     }, [onComplete]);
 
     useEffect(() => {
@@ -31,7 +31,6 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
     return (
         <motion.div
             className="fixed inset-0 z-50 flex items-center justify-center pointer-events-auto"
-        // Parent doesn't fade out, children move away
         >
             {/* Left Curtain */}
             <motion.div
@@ -39,10 +38,9 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
                 initial={{ x: 0 }}
                 exit={{
                     x: "-100%",
-                    transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }  // Custom cubic bezier for heavy curtain feel
+                    transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
                 }}
             >
-                {/* Gold Trim/Tassel hint */}
                 <div className="absolute right-4 top-0 bottom-0 w-2 bg-yellow-600/30 blur-sm" />
             </motion.div>
 
@@ -55,7 +53,6 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
                     transition: { duration: 1.5, ease: [0.22, 1, 0.36, 1] }
                 }}
             >
-                {/* Gold Trim/Tassel hint */}
                 <div className="absolute left-4 top-0 bottom-0 w-2 bg-yellow-600/30 blur-sm" />
             </motion.div>
 
@@ -64,12 +61,10 @@ export default function IntroSequence({ onComplete }: IntroSequenceProps) {
                 className="relative z-50 flex flex-col items-center justify-center text-white"
                 exit={{ opacity: 0, scale: 1.5, transition: { duration: 0.8 } }}
             >
-                {/* Countdown Circle */}
                 <div className="relative flex items-center justify-center w-64 h-64 border-4 border-white/20 rounded-full bg-black/40 backdrop-blur-sm shadow-[0_0_50px_rgba(0,0,0,0.5)]">
                     <div className="absolute w-full h-0.5 bg-white/30 rotate-90" />
                     <div className="absolute w-full h-0.5 bg-white/30" />
 
-                    {/* Rotating arm effect */}
                     <motion.div
                         className="absolute w-1/2 h-0.5 bg-white/80 origin-right left-0"
                         animate={{ rotate: 360 }}
