@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+  --background: #0a0a0a;
+  /* Neutral 950 */
+  --foreground: #ededed;
+}
+
+@theme {
+  --font-bebas: var(--font-bebas), sans-serif;
+  --font-mono: var(--font-mono), monospace;
+
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-scanline: scanline 3s linear infinite;
+  --animate-rolling-credits: rolling-credits 20s linear infinite;
+  --animate-fade-in: fade-in 0.5s ease-out forwards;
+
+  @keyframes scanline {
+    0% {
+      transform: translateY(-100%);
+    }
+
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes rolling-credits {
+    0% {
+      transform: translateY(100%);
+    }
+
+    100% {
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}
+
+@layer utilities {
+  .text-shadow-glow {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+
+  .curtain-texture {
+    /* Rich Red Velvet Texture */
+    background-color: #4a0404;
+    background-image:
+      repeating-linear-gradient(90deg,
+        transparent 0,
+        transparent 40px,
+        rgba(0, 0, 0, 0.4) 40px,
+        rgba(0, 0, 0, 0.4) 60px),
+      linear-gradient(90deg,
+        #5e0b0b 0%,
+        #8a1c1c 50%,
+        #5e0b0b 100%);
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8);
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-mono);
+  /* Default to mono for engineering feel */
+  overflow-x: hidden;
+}
