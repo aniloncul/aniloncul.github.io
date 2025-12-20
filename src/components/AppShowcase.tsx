@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     ExternalLink,
@@ -47,36 +47,70 @@ const techIcons: Record<string, React.ReactNode> = {
 const webApps = [
     {
         id: 1,
-        name: "Curator Map Berlin",
-        tagline: "AI-Powered Event Discovery Platform",
+        name: "LingoCast",
+        tagline: "AI-Powered Language Learning Podcast Generator",
         description:
-            "An intelligent event discovery platform that aggregates and curates Berlin's vibrant cultural scene. Features real-time mapping, personalized recommendations, and social sharing capabilities.",
-        gradient: "from-violet-600 via-purple-600 to-indigo-600",
-        screenshot: "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=1200&h=800&fit=crop",
+            "An educative AI platform that generates personalized language-learning podcasts on demand. Features real-time streaming generation, multi-speaker TTS synthesis, AI-generated cover art, and interactive comprehension quizzes.",
+        gradient: "from-amber-600 via-orange-600 to-red-600",
+        screenshot: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=1200&h=800&fit=crop",
         status: "live",
-        link: "#",
+        link: "https://podcast-generator-delta.vercel.app/",
         techStack: {
-            frontend: ["Next.js", "TypeScript", "TailwindCSS", "Zustand"],
-            backend: ["Python", "FastAPI", "PostgreSQL"],
-            ai: ["OpenAI", "LangChain"],
-            orchestration: ["Celery", "Redis", "n8n"],
-            deployment: ["Vercel", "Docker", "AWS"],
+            frontend: ["Next.js 16", "TypeScript", "TailwindCSS 4", "Framer Motion"],
+            backend: ["Python", "FastAPI", "Supabase"],
+            ai: ["Google Gemini 2.5 Flash", "Gemini TTS", "Hugging Face FLUX.1"],
+            orchestration: ["Streaming Response", "Async/Await"],
+            deployment: ["Vercel", "Render.com"],
         },
         workflowDescription:
-            "Automated data pipelines scrape event data from multiple sources daily. Python scripts process and normalize venue information, while AI models categorize events and generate personalized recommendations.",
+            "User inputs topic, details, level, and grammar focus. Backend streams status updates while: 1) Gemini generates dialogue script with quiz questions, 2) HF FLUX creates cover art, 3) Gemini TTS synthesizes multi-speaker audio. Files are uploaded to Supabase Storage and optionally saved to database.",
         aiFeatures: [
-            "GPT-4 powered event descriptions",
-            "Semantic search for events",
-            "Personalized recommendations",
+            "Gemini 2.5 Flash script generation with structured JSON output",
+            "Multi-speaker TTS with distinct voices (Zephyr & Puck)",
+            "FLUX.1-schnell AI image generation for cover art",
+            "Auto-generated comprehension quizzes",
         ],
         pythonScripts: [
-            "Web scraping with BeautifulSoup",
-            "Data normalization pipelines",
-            "Geocoding & clustering",
+            "Script generation with Google GenAI SDK",
+            "Hugging Face API integration for image generation",
+            "PCM to WAV audio format conversion",
+            "Supabase storage sync & upload utilities",
         ],
     },
     {
         id: 2,
+        name: "Explores.Berlin",
+        tagline: "AI-Augmented Event Discovery Platform",
+        description:
+            "A curated, interactive map application for discovering underground events, exhibitions, and techno culture in Berlin. Built with a 'Techno-Rave Brutalist' aesthetic featuring viewport-consistent filtering, adaptive map markers, and a dark mode design system that reflects Berlin's club culture.",
+        gradient: "from-zinc-800 via-neutral-900 to-yellow-500",
+        screenshot: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&h=800&fit=crop",
+        status: "live",
+        link: "https://explores.berlin/",
+        techStack: {
+            frontend: ["Next.js 16", "TypeScript", "TailwindCSS 3.4", "Zustand", "React 19"],
+            backend: ["Node.js", "Supabase (PostgreSQL)"],
+            ai: ["LLM-Guided Web Scraping", "LLM Semantic Classification"],
+            orchestration: ["Model Context Protocol (MCP)", "Agentic AI Workflow"],
+            deployment: ["Vercel", "Supabase"],
+        },
+        workflowDescription:
+            "Agentic AI workflow with MCP integration enables autonomous development: 1) Agent has direct file system/terminal access for loop-in-the-loop error correction, 2) LLM-guided scraping extracts event data from DOM, 3) LLM classification layer normalizes unstructured data into tagged metadata, 4) Data pipeline enriches Supabase database automatically.",
+        aiFeatures: [
+            "Model Context Protocol (MCP) for autonomous code development",
+            "LLM-guided web scraping with semantic DOM perception",
+            "LLM-based semantic classification for event categorization",
+            "Self-healing code through iterative error analysis",
+        ],
+        pythonScripts: [
+            "CSV parsing and data normalization scripts",
+            "Timezone adjustment utilities",
+            "Supabase sync and upload scripts",
+            "Category and recommendation validation scripts",
+        ]
+    },
+    {
+        id: 3,
         name: "NeoFinance Dashboard",
         tagline: "Intelligent Financial Analytics",
         description:
@@ -106,7 +140,7 @@ const webApps = [
         ],
     },
     {
-        id: 3,
+        id: 4,
         name: "MindFlow Workspace",
         tagline: "Your AI-Enhanced Second Brain",
         description:
@@ -136,7 +170,7 @@ const webApps = [
         ],
     },
     {
-        id: 4,
+        id: 5,
         name: "DataFlow Orchestrator",
         tagline: "Enterprise Workflow Automation",
         description:
@@ -182,7 +216,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: isActive ? 1 : 0.5, scale: isActive ? 1 : 0.9 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-            className={`relative w-full max-w-6xl mx-auto ${isActive ? "z-10" : "z-0"}`}
+            className={`relative w-full mx-auto ${isActive ? "z-10" : "z-0"}`}
         >
             <div className="glass rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors">
                 {/* Browser Chrome */}
@@ -211,8 +245,8 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     )}
                 </div>
 
-                {/* Split Layout: Left (Preview) | Right (Tech Stack) */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[420px]">
+                {/* Split Layout: Left (Preview) | Right (Tech Stack) - Responsive height based on viewport */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px]">
                     {/* LEFT SIDE - Web App Preview */}
                     <div className="relative">
                         {/* Screenshot */}
@@ -225,24 +259,24 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent to-neutral-900/80 hidden lg:block" />
 
                         {/* Content */}
-                        <div className="relative h-full flex flex-col justify-end p-6">
-                            <h3 className={`text-2xl md:text-3xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-1`}>
+                        <div className="relative h-full flex flex-col justify-end p-4 md:p-6 lg:p-8 xl:p-10">
+                            <h3 className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-1 lg:mb-2`}>
                                 {app.name}
                             </h3>
-                            <p className="text-sm text-neutral-300 font-medium mb-3">{app.tagline}</p>
-                            <p className="text-xs text-neutral-400 leading-relaxed mb-4 max-w-md">{app.description}</p>
+                            <p className="text-sm md:text-base lg:text-lg text-neutral-300 font-medium mb-2 lg:mb-4">{app.tagline}</p>
+                            <p className="text-xs md:text-sm lg:text-base text-neutral-400 leading-relaxed mb-4 lg:mb-6 max-w-2xl">{app.description}</p>
 
                             <a
                                 href={app.link}
-                                className={`inline-flex items-center gap-1.5 px-4 py-2 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-sm font-medium hover:shadow-lg transition-all w-fit`}
+                                className={`inline-flex items-center gap-2 px-4 py-2 lg:px-6 lg:py-3 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-sm lg:text-base font-medium hover:shadow-lg hover:scale-105 transition-all w-fit`}
                             >
-                                View Project <ExternalLink size={14} />
+                                View Project <ExternalLink size={16} className="lg:w-5 lg:h-5" />
                             </a>
                         </div>
                     </div>
 
                     {/* RIGHT SIDE - Tech Stack */}
-                    <div className="bg-neutral-900/80 p-5 space-y-4 overflow-y-auto max-h-[420px]">
+                    <div className="bg-neutral-900/80 p-4 md:p-5 lg:p-6 xl:p-8 space-y-3 lg:space-y-4 xl:space-y-5 overflow-y-auto max-h-[300px] md:max-h-[400px] lg:max-h-[500px] xl:max-h-[550px] 2xl:max-h-[600px]">
                         {/* Tech Stack Header */}
                         <h4 className="text-sm font-bebas text-white flex items-center gap-2 border-b border-white/10 pb-2">
                             <Layers className="text-indigo-400" size={16} />
@@ -362,7 +396,11 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 export default function AppShowcase() {
     const [activeIndex, setActiveIndex] = useState(0);
     const [direction, setDirection] = useState(0);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Minimum swipe distance to trigger slide change
+    const minSwipeDistance = 50;
 
     const nextSlide = () => {
         setDirection(1);
@@ -379,21 +417,31 @@ export default function AppShowcase() {
         setActiveIndex(index);
     };
 
-    useEffect(() => {
-        intervalRef.current = setInterval(nextSlide, 8000);
-        return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
-        };
-    }, []);
+    // Touch handlers for swipe support
+    const onTouchStart = (e: React.TouchEvent) => {
+        setTouchEnd(null);
+        setTouchStart(e.targetTouches[0].clientX);
+    };
 
-    const handleManualNav = (callback: () => void) => {
-        if (intervalRef.current) clearInterval(intervalRef.current);
-        callback();
-        intervalRef.current = setInterval(nextSlide, 8000);
+    const onTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.targetTouches[0].clientX);
+    };
+
+    const onTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > minSwipeDistance;
+        const isRightSwipe = distance < -minSwipeDistance;
+
+        if (isLeftSwipe) {
+            nextSlide();
+        } else if (isRightSwipe) {
+            prevSlide();
+        }
     };
 
     return (
-        <section id="apps" className="relative py-20 overflow-hidden">
+        <section id="apps" className="relative h-full flex flex-col justify-center overflow-hidden py-8">
             {/* Background */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl" />
@@ -401,31 +449,31 @@ export default function AppShowcase() {
             </div>
 
             {/* Header */}
-            <div className="container mx-auto px-4 mb-10 relative z-10">
+            <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 mb-6 lg:mb-10 relative z-10">
                 <motion.div
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     className="text-center"
                 >
-                    <span className="text-xs font-mono text-indigo-400 uppercase tracking-widest mb-3 block">
+                    <span className="text-xs md:text-sm font-mono text-indigo-400 uppercase tracking-widest mb-3 block">
                         Featured Work
                     </span>
-                    <h2 className="text-3xl md:text-5xl font-bebas text-white mb-4">
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bebas text-white mb-4">
                         Web Applications I&apos;ve Built
                     </h2>
-                    <p className="text-sm text-neutral-400 max-w-xl mx-auto">
+                    <p className="text-sm md:text-base lg:text-lg text-neutral-400 max-w-2xl mx-auto">
                         Full-stack applications powered by modern frameworks, AI integrations, and automated workflows.
                     </p>
                 </motion.div>
             </div>
 
             {/* Carousel */}
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 relative z-10 flex-1 flex flex-col justify-center">
                 <div className="relative">
                     {/* Nav Arrows */}
                     <button
-                        onClick={() => handleManualNav(prevSlide)}
+                        onClick={prevSlide}
                         className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-white/10 transition-colors"
                         aria-label="Previous"
                     >
@@ -433,15 +481,20 @@ export default function AppShowcase() {
                     </button>
 
                     <button
-                        onClick={() => handleManualNav(nextSlide)}
+                        onClick={nextSlide}
                         className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-white/10 transition-colors"
                         aria-label="Next"
                     >
                         <ChevronRight size={20} className="text-white" />
                     </button>
 
-                    {/* Slides */}
-                    <div className="overflow-hidden px-10 md:px-14">
+                    {/* Slides with swipe support */}
+                    <div
+                        className="overflow-hidden px-10 md:px-14"
+                        onTouchStart={onTouchStart}
+                        onTouchMove={onTouchMove}
+                        onTouchEnd={onTouchEnd}
+                    >
                         <AnimatePresence mode="wait">
                             <motion.div
                                 key={activeIndex}
@@ -460,10 +513,10 @@ export default function AppShowcase() {
                         {webApps.map((app, index) => (
                             <button
                                 key={app.id}
-                                onClick={() => handleManualNav(() => goToSlide(index))}
+                                onClick={() => goToSlide(index)}
                                 className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex
-                                        ? "w-6 bg-gradient-to-r from-indigo-500 to-purple-500"
-                                        : "w-1.5 bg-white/30 hover:bg-white/50"
+                                    ? "w-6 bg-gradient-to-r from-indigo-500 to-purple-500"
+                                    : "w-1.5 bg-white/30 hover:bg-white/50"
                                     }`}
                                 aria-label={`Go to ${app.name}`}
                             />

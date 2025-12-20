@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const navItems = [
+    { label: "Home", href: "#hero" },
     { label: "Apps", href: "#apps" },
     { label: "About", href: "#about" },
     { label: "Contact", href: "#contact" },
@@ -13,13 +14,39 @@ const navItems = [
 export default function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState("hero");
 
     useEffect(() => {
+        const container = document.querySelector(".fullpage-container");
+        if (!container) return;
+
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            setIsScrolled(container.scrollTop > 50);
+
+            // Determine active section from scroll position
+            const scrollPosition = container.scrollTop;
+            const windowHeight = window.innerHeight;
+
+            navItems.forEach((item) => {
+                const sectionId = item.href.substring(1);
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    const elementTop = element.offsetTop;
+                    const elementBottom = elementTop + element.offsetHeight;
+
+                    if (
+                        scrollPosition >= elementTop - windowHeight / 3 &&
+                        scrollPosition < elementBottom - windowHeight / 3
+                    ) {
+                        setActiveSection(sectionId);
+                    }
+                }
+            });
         };
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
+
+        container.addEventListener("scroll", handleScroll);
+        handleScroll();
+        return () => container.removeEventListener("scroll", handleScroll);
     }, []);
 
     return (
@@ -32,21 +59,36 @@ export default function Navbar() {
             >
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
-                    <a href="/" className="text-2xl font-bebas text-white tracking-wider">
+                    <a href="#hero" className="text-2xl font-bebas text-white tracking-wider">
                         ANIL<span className="text-gradient">.</span>
                     </a>
 
                     {/* Desktop Nav */}
                     <nav className="hidden md:flex items-center gap-8">
-                        {navItems.map((item) => (
-                            <a
-                                key={item.label}
-                                href={item.href}
-                                className="text-sm text-neutral-400 hover:text-white transition-colors font-mono uppercase tracking-wider"
-                            >
-                                {item.label}
-                            </a>
-                        ))}
+                        {navItems.map((item) => {
+                            const sectionId = item.href.substring(1);
+                            const isActive = activeSection === sectionId;
+
+                            return (
+                                <a
+                                    key={item.label}
+                                    href={item.href}
+                                    className={`relative text-sm transition-colors font-mono uppercase tracking-wider ${isActive
+                                            ? "text-white"
+                                            : "text-neutral-400 hover:text-white"
+                                        }`}
+                                >
+                                    {item.label}
+                                    {isActive && (
+                                        <motion.div
+                                            layoutId="activeNav"
+                                            className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-full"
+                                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                                        />
+                                    )}
+                                </a>
+                            );
+                        })}
                         <a
                             href="#contact"
                             className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-white text-sm font-bold hover:scale-105 transition-transform"
@@ -76,16 +118,22 @@ export default function Navbar() {
                         className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl pt-24 px-4 md:hidden"
                     >
                         <nav className="flex flex-col gap-6">
-                            {navItems.map((item) => (
-                                <a
-                                    key={item.label}
-                                    href={item.href}
-                                    onClick={() => setIsMobileOpen(false)}
-                                    className="text-3xl font-bebas text-white"
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
+                            {navItems.map((item) => {
+                                const sectionId = item.href.substring(1);
+                                const isActive = activeSection === sectionId;
+
+                                return (
+                                    <a
+                                        key={item.label}
+                                        href={item.href}
+                                        onClick={() => setIsMobileOpen(false)}
+                                        className={`text-3xl font-bebas ${isActive ? "text-gradient" : "text-white"
+                                            }`}
+                                    >
+                                        {item.label}
+                                    </a>
+                                );
+                            })}
                             <a
                                 href="#contact"
                                 onClick={() => setIsMobileOpen(false)}
