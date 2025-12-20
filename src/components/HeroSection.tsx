@@ -1,43 +1,12 @@
 "use client";
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
-
-const codeSnippet = `// Automation Pipeline
-import { orchestrate } from '@ai/core';
-
-async function deployPipeline() {
-  const workflow = await orchestrate({
-    trigger: 'on_commit',
-    stages: [
-      { name: 'build', runner: 'docker' },
-      { name: 'test', parallel: true },
-      { name: 'deploy', target: 'vercel' }
-    ]
-  });
-
-  await workflow.execute({
-    notifications: ['slack', 'email'],
-    rollback: { enabled: true }
-  });
-  
-  return { status: 'deployed' };
-}`;
-
-// Simple syntax highlighting
-function highlightSyntax(line: string): string {
-    return line
-        .replace(/\/\/.*/g, '<span class="text-neutral-500">$&</span>')
-        .replace(/('.*?'|".*?")/g, '<span class="text-emerald-400">$1</span>')
-        .replace(/\b(import|from|async|function|await|return|const)\b/g, '<span class="text-pink-400">$1</span>')
-        .replace(/\b(true|false|null|undefined)\b/g, '<span class="text-orange-400">$1</span>')
-        .replace(/(\{|\}|\[|\])/g, '<span class="text-yellow-300">$1</span>');
-}
+import AnimatedCodeBlock from "./AnimatedCodeBlock";
 
 export default function HeroSection() {
     const ref = useRef<HTMLDivElement>(null);
-    const [mounted, setMounted] = useState(false);
 
     const { scrollYProgress } = useScroll({
         target: ref,
@@ -46,13 +15,6 @@ export default function HeroSection() {
 
     const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
     const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
-    // Only render highlighted code after hydration
-    useEffect(() => {
-        setMounted(true);
-    }, []);
-
-    const codeLines = codeSnippet.split('\n');
 
     return (
         <section
@@ -138,7 +100,7 @@ export default function HeroSection() {
                         </motion.div>
                     </div>
 
-                    {/* Right: Code Snippet */}
+                    {/* Right: Animated Code Block */}
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         animate={{ opacity: 1, x: 0 }}
@@ -149,43 +111,24 @@ export default function HeroSection() {
                             {/* Glow behind */}
                             <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 to-pink-500/20 rounded-2xl blur-2xl" />
 
-                            {/* Code Window */}
-                            <div className="relative glass-dark rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl">
-                                {/* Window Header */}
-                                <div className="flex items-center gap-2 px-4 py-3 lg:px-5 lg:py-4 bg-black/40 border-b border-white/5">
-                                    <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-red-500" />
-                                    <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-yellow-500" />
-                                    <div className="w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-green-500" />
-                                    <span className="ml-3 text-xs lg:text-sm text-neutral-500 font-mono">automation.ts</span>
-                                </div>
+                            {/* Animated Code Block */}
+                            <div className="relative">
+                                <AnimatedCodeBlock
+                                    typingSpeed={12}
+                                    startDelay={1000}
+                                    autoPlay={true}
+                                    showControls={true}
+                                />
 
-                                {/* Code Content */}
-                                <div className="p-4 lg:p-6 xl:p-8 font-mono text-sm lg:text-base xl:text-lg leading-relaxed lg:leading-loose overflow-x-auto">
-                                    <pre className="text-neutral-300">
-                                        <code>
-                                            {codeLines.map((line, i) => (
-                                                <div key={i} className="flex">
-                                                    <span className="w-8 lg:w-10 text-neutral-600 select-none text-right pr-4">{i + 1}</span>
-                                                    {mounted ? (
-                                                        <span dangerouslySetInnerHTML={{ __html: highlightSyntax(line) }} />
-                                                    ) : (
-                                                        <span>{line}</span>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </code>
-                                    </pre>
-                                </div>
+                                {/* Floating decoration */}
+                                <motion.div
+                                    className="absolute -top-4 -right-4 lg:-top-5 lg:-right-5 px-3 py-1 lg:px-4 lg:py-2 glass rounded-full text-xs lg:text-sm text-indigo-400 font-mono z-20"
+                                    animate={{ y: [0, -5, 0] }}
+                                    transition={{ duration: 2, repeat: Infinity }}
+                                >
+                                    TypeScript
+                                </motion.div>
                             </div>
-
-                            {/* Floating decoration */}
-                            <motion.div
-                                className="absolute -top-4 -right-4 lg:-top-5 lg:-right-5 px-3 py-1 lg:px-4 lg:py-2 glass rounded-full text-xs lg:text-sm text-indigo-400 font-mono"
-                                animate={{ y: [0, -5, 0] }}
-                                transition={{ duration: 2, repeat: Infinity }}
-                            >
-                                TypeScript
-                            </motion.div>
                         </div>
                     </motion.div>
                 </motion.div>
