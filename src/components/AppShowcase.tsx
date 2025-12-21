@@ -20,6 +20,7 @@ import {
     Server,
     Sparkles,
 } from "lucide-react";
+import WorkflowDiagram from "./WorkflowDiagram";
 
 // Tech stack icons mapping
 const techIcons: Record<string, React.ReactNode> = {
@@ -76,6 +77,14 @@ const webApps = [
             "PCM to WAV audio format conversion",
             "Supabase storage sync & upload utilities",
         ],
+        workflowNodes: [
+            { id: "1", label: "User Input", icon: "user" },
+            { id: "2", label: "FastAPI", icon: "fastapi" },
+            { id: "3", label: "Gemini", icon: "gemini" },
+            { id: "4", label: "HuggingFace", icon: "huggingface" },
+            { id: "5", label: "Audio Gen", icon: "audio" },
+            { id: "6", label: "Supabase", icon: "supabase" },
+        ],
     },
     {
         id: 2,
@@ -107,7 +116,14 @@ const webApps = [
             "Timezone adjustment utilities",
             "Supabase sync and upload scripts",
             "Category and recommendation validation scripts",
-        ]
+        ],
+        workflowNodes: [
+            { id: "1", label: "Web Scraper", icon: "python" },
+            { id: "2", label: "LLM Parse", icon: "gemini" },
+            { id: "3", label: "Classify", icon: "openai" },
+            { id: "4", label: "Supabase", icon: "supabase" },
+            { id: "5", label: "Next.js", icon: "nextjs" },
+        ],
     },
     {
         id: 3,
@@ -137,6 +153,13 @@ const webApps = [
             "Real-time data ingestion",
             "Technical indicator calculations",
             "Portfolio optimization",
+        ],
+        workflowNodes: [
+            { id: "1", label: "Market API", icon: "api" },
+            { id: "2", label: "Python", icon: "python" },
+            { id: "3", label: "OpenAI", icon: "openai" },
+            { id: "4", label: "Database", icon: "database" },
+            { id: "5", label: "React", icon: "react" },
         ],
     },
     {
@@ -168,6 +191,13 @@ const webApps = [
             "Knowledge graph construction",
             "Embedding generation",
         ],
+        workflowNodes: [
+            { id: "1", label: "User", icon: "user" },
+            { id: "2", label: "Next.js", icon: "nextjs" },
+            { id: "3", label: "FastAPI", icon: "fastapi" },
+            { id: "4", label: "OpenAI", icon: "openai" },
+            { id: "5", label: "PostgreSQL", icon: "database" },
+        ],
     },
     {
         id: 5,
@@ -198,6 +228,13 @@ const webApps = [
             "API integration adapters",
             "Schema validation & mapping",
         ],
+        workflowNodes: [
+            { id: "1", label: "API Input", icon: "api" },
+            { id: "2", label: "n8n", icon: "nodejs" },
+            { id: "3", label: "Python", icon: "python" },
+            { id: "4", label: "OpenAI", icon: "openai" },
+            { id: "5", label: "Database", icon: "database" },
+        ],
     },
 ];
 
@@ -205,7 +242,7 @@ function TechBadge({ tech }: { tech: string }) {
     return (
         <div className="flex items-center gap-1 px-2 py-0.5 bg-white/5 rounded border border-white/10 hover:bg-white/10 transition-all">
             <span className="text-indigo-400">{techIcons[tech] || <Code2 size={12} />}</span>
-            <span className="text-[10px] text-neutral-300">{tech}</span>
+            <span className="text-[16px] text-neutral-300">{tech}</span>
         </div>
     );
 }
@@ -276,7 +313,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     </div>
 
                     {/* RIGHT SIDE - Tech Stack */}
-                    <div className="bg-neutral-900/80 p-4 md:p-5 lg:p-6 xl:p-8 space-y-3 lg:space-y-4 xl:space-y-5 overflow-y-auto max-h-[300px] md:max-h-[400px] lg:max-h-[500px] xl:max-h-[550px] 2xl:max-h-[600px]">
+                    <div className="bg-neutral-900/80 p-3 md:p-4 lg:p-5 space-y-2 lg:space-y-3">
                         {/* Tech Stack Header */}
                         <h4 className="text-sm font-bebas text-white flex items-center gap-2 border-b border-white/10 pb-2">
                             <Layers className="text-indigo-400" size={16} />
@@ -284,11 +321,11 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         </h4>
 
                         {/* Tech Categories Grid */}
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-2">
                             {/* Frontend */}
-                            <div className="glass rounded-lg p-3 border border-white/5">
-                                <div className="text-[10px] text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Globe size={10} /> Frontend
+                            <div className="glass rounded-lg p-2 border border-white/5">
+                                <div className="text-[16px] text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Globe size={14} /> Frontend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
                                     {app.techStack.frontend.map((tech) => (
@@ -298,9 +335,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
 
                             {/* Backend */}
-                            <div className="glass rounded-lg p-3 border border-white/5">
-                                <div className="text-[10px] text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Server size={10} /> Backend
+                            <div className="glass rounded-lg p-2 border border-white/5">
+                                <div className="text-[16px] text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Server size={14} /> Backend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
                                     {app.techStack.backend.map((tech) => (
@@ -310,9 +347,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
 
                             {/* AI */}
-                            <div className="glass rounded-lg p-3 border border-white/5">
-                                <div className="text-[10px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Bot size={10} /> AI & ML
+                            <div className="glass rounded-lg p-2 border border-white/5">
+                                <div className="text-[16px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Bot size={14} /> AI & ML
                                 </div>
                                 <div className="flex flex-wrap gap-1">
                                     {app.techStack.ai.map((tech) => (
@@ -322,9 +359,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
 
                             {/* Orchestration */}
-                            <div className="glass rounded-lg p-3 border border-white/5">
-                                <div className="text-[10px] text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Workflow size={10} /> Orchestration
+                            <div className="glass rounded-lg p-2 border border-white/5">
+                                <div className="text-[16px] text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Workflow size={14} /> Orchestration
                                 </div>
                                 <div className="flex flex-wrap gap-1">
                                     {app.techStack.orchestration.map((tech) => (
@@ -335,9 +372,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         </div>
 
                         {/* Deployment */}
-                        <div className="glass rounded-lg p-3 border border-white/5">
-                            <div className="text-[10px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                <Cloud size={10} /> Deployment
+                        <div className="glass rounded-lg p-2 border border-white/5">
+                            <div className="text-[16px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <Cloud size={14} /> Deployment
                             </div>
                             <div className="flex flex-wrap gap-1">
                                 {app.techStack.deployment.map((tech) => (
@@ -346,25 +383,25 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
                         </div>
 
-                        {/* Workflow Description */}
-                        <div className="glass rounded-lg p-3 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5">
-                            <div className="text-[10px] text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                <Workflow size={10} /> Workflow Orchestration
+                        {/* Workflow Diagram - n8n style visual */}
+                        <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5">
+                            <div className="text-[14px] text-amber-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                                <Workflow size={14} /> Workflow Pipeline
                             </div>
-                            <p className="text-[11px] text-neutral-400 leading-relaxed">{app.workflowDescription}</p>
+                            <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
                         </div>
 
                         {/* AI & Python Grid */}
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-2 gap-2">
                             {/* AI Features */}
-                            <div className="glass rounded-lg p-3 border border-white/5 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                                <div className="text-[10px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Bot size={10} /> AI Features
+                            <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
+                                <div className="text-[16px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Bot size={14} /> AI Features
                                 </div>
                                 <ul className="space-y-1">
                                     {app.aiFeatures.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-[10px] text-neutral-400">
-                                            <Sparkles size={10} className="text-purple-400 mt-0.5 shrink-0" />
+                                        <li key={idx} className="flex items-start gap-1 text-[16px] text-neutral-400">
+                                            <Sparkles size={14} className="text-purple-400 mt-0.5 shrink-0" />
                                             {feature}
                                         </li>
                                     ))}
@@ -372,14 +409,14 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
 
                             {/* Python Scripts */}
-                            <div className="glass rounded-lg p-3 border border-white/5 bg-gradient-to-r from-blue-500/5 to-cyan-500/5">
-                                <div className="text-[10px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Terminal size={10} /> Python Scripts
+                            <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-blue-500/5 to-cyan-500/5">
+                                <div className="text-[16px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Terminal size={14} /> Python Scripts
                                 </div>
                                 <ul className="space-y-1">
                                     {app.pythonScripts.map((script, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-[10px] text-neutral-400">
-                                            <Code2 size={10} className="text-cyan-400 mt-0.5 shrink-0" />
+                                        <li key={idx} className="flex items-start gap-1 text-[16px] text-neutral-400">
+                                            <Code2 size={14} className="text-cyan-400 mt-0.5 shrink-0" />
                                             {script}
                                         </li>
                                     ))}
