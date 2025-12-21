@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, Sparkles } from "lucide-react";
 import AnimatedCodeBlock from "./AnimatedCodeBlock";
+import AnimatedWires from "./AnimatedWires";
 
 export default function HeroSection() {
     const ref = useRef<HTMLDivElement>(null);
@@ -19,8 +20,11 @@ export default function HeroSection() {
     return (
         <section
             ref={ref}
-            className="relative h-full flex items-center overflow-hidden gradient-mesh noise"
+            className="relative min-h-screen flex items-center overflow-hidden gradient-mesh noise"
         >
+            {/* Animated Circuit Wires Background */}
+            <AnimatedWires className="opacity-40" />
+
             {/* Floating orbs */}
             <motion.div
                 className="absolute w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl"
