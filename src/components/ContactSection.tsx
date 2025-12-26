@@ -1,88 +1,128 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Twitter, ArrowUpRight, Calendar } from "lucide-react";
-
-const socials = [
-    { icon: Github, label: "GitHub", href: "#", color: "hover:bg-white hover:text-black" },
-    { icon: Linkedin, label: "LinkedIn", href: "#", color: "hover:bg-[#0077b5]" },
-    { icon: Twitter, label: "Twitter", href: "#", color: "hover:bg-[#1DA1F2]" },
-];
+import { Github, Linkedin, Send } from "lucide-react";
 
 export default function ContactSection() {
+    // We now send to our own Next.js API route to avoid CORS errors
+    const API_URL = "/api/contact";
+
+    const [subject, setSubject] = useState("");
+    const [message, setMessage] = useState("");
+    const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
+
+    const handleSend = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setStatus("sending");
+
+        try {
+            // Send data to Local API Proxy
+            const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ subject, message }),
+            });
+
+            if (!res.ok) throw new Error("API failed");
+
+            setStatus("success");
+            setSubject("");
+            setMessage("");
+
+            // Reset status after 3 seconds
+            setTimeout(() => setStatus("idle"), 3000);
+        } catch (error) {
+            console.error("Failed to send:", error);
+            setStatus("error");
+        }
+    };
+
     return (
-        <section id="contact" className="relative h-full flex flex-col justify-center overflow-hidden gradient-mesh noise py-8 lg:py-12">
-            <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 xl:px-12 flex-1 flex flex-col justify-center">
+        <section id="contact" className="relative min-h-[50vh] flex flex-col justify-center items-center py-20 px-4">
+            <div className="w-full max-w-md">
                 <motion.div
-                    initial={{ opacity: 0, y: 40 }}
+                    initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="text-center max-w-5xl mx-auto"
+                    className="flex flex-col gap-6"
                 >
-                    <span className="text-sm md:text-base lg:text-lg font-mono text-indigo-400 uppercase tracking-widest mb-4 lg:mb-6 block">
-                        Let&apos;s Connect
-                    </span>
-                    <h2 className="text-5xl md:text-7xl lg:text-8xl xl:text-9xl 2xl:text-[10rem] font-bebas text-white mb-4 lg:mb-6 xl:mb-8">
-                        Have a Project?
-                        <br />
-                        <span className="text-gradient">Let&apos;s Talk</span>
-                    </h2>
-                    <p className="text-neutral-400 text-base md:text-lg lg:text-xl xl:text-2xl mb-10 lg:mb-12 xl:mb-16 max-w-2xl mx-auto leading-relaxed">
-                        I&apos;m always interested in hearing about new projects and opportunities.
-                        Whether you have a question or just want to say hi, feel free to reach out.
-                    </p>
-
-                    {/* CTA Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-4 lg:gap-6 justify-center mb-10 lg:mb-14 xl:mb-16">
-                        <motion.a
-                            href="mailto:hello@aniloncul.dev"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center justify-center gap-3 lg:gap-4 px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-white text-base lg:text-lg xl:text-xl font-bold shadow-lg shadow-indigo-500/25"
-                        >
-                            <Mail size={20} className="lg:w-6 lg:h-6" />
-                            Send an Email
-                            <ArrowUpRight size={18} className="lg:w-5 lg:h-5" />
-                        </motion.a>
-
-                        <motion.a
-                            href="#"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="inline-flex items-center justify-center gap-3 lg:gap-4 px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 glass rounded-full text-white text-base lg:text-lg xl:text-xl font-bold hover:bg-white/10"
-                        >
-                            <Calendar size={20} className="lg:w-6 lg:h-6" />
-                            Book a Call
-                        </motion.a>
+                    <div className="text-center mb-4">
+                        <h2 className="text-3xl font-bold text-white mb-2">Get in Touch</h2>
+                        <p className="text-neutral-400">Send a message directly to my Telegram!</p>
                     </div>
 
-                    {/* Social Links */}
-                    <div className="flex justify-center gap-4 lg:gap-6">
-                        {socials.map((social) => (
-                            <motion.a
-                                key={social.label}
-                                href={social.href}
-                                whileHover={{ scale: 1.1, y: -5 }}
-                                whileTap={{ scale: 0.95 }}
-                                className={`p-4 lg:p-5 xl:p-6 glass rounded-full text-white transition-all ${social.color}`}
-                                aria-label={social.label}
-                            >
-                                <social.icon size={24} className="lg:w-7 lg:h-7 xl:w-8 xl:h-8" />
-                            </motion.a>
-                        ))}
+                    <form onSubmit={handleSend} className="flex flex-col gap-4">
+                        <div>
+                            <input
+                                type="text"
+                                placeholder="Subject"
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <textarea
+                                placeholder="Message"
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                                rows={4}
+                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+                                required
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            disabled={status === "sending" || status === "success"}
+                            className={`w-full font-bold rounded-lg py-3 flex items-center justify-center gap-2 transition-all ${status === "success"
+                                ? "bg-green-500 text-white"
+                                : "bg-white text-black hover:bg-neutral-200"
+                                }`}
+                        >
+                            {status === "sending" ? (
+                                <span>Sending...</span>
+                            ) : status === "success" ? (
+                                <span>Message Sent! 🚀</span>
+                            ) : (
+                                <>
+                                    <Send size={18} />
+                                    Send to Telegram
+                                </>
+                            )}
+                        </button>
+
+                        {status === "error" && (
+                            <p className="text-red-400 text-sm text-center">Failed to send. Please check the Webhook URL.</p>
+                        )}
+                    </form>
+
+                    <div className="flex justify-center gap-6 mt-8">
+                        <a
+                            href="https://github.com/aniloncul"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-neutral-400 hover:text-white transition-colors"
+                        >
+                            <Github size={24} />
+                        </a>
+                        <a
+                            href="https://www.linkedin.com/in/anil-oncul/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-neutral-400 hover:text-[#0077b5] transition-colors"
+                        >
+                            <Linkedin size={24} />
+                        </a>
                     </div>
                 </motion.div>
             </div>
 
-            {/* Footer */}
-            <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 xl:px-12 mt-auto pt-6 lg:pt-8 border-t border-white/5">
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4 text-sm lg:text-base text-neutral-500">
-                    <p>© 2025 Anil Oncul. All rights reserved.</p>
-                    <p className="font-mono text-xs lg:text-sm">
-                        Built with Next.js, Tailwind CSS &amp; Framer Motion
-                    </p>
-                </div>
+            {/* Simple Footer */}
+            <div className="absolute bottom-4 left-0 w-full text-center text-neutral-600 text-sm">
+                <p>© 2025 Anil Oncul. All rights reserved.</p>
             </div>
         </section>
     );

@@ -74,8 +74,8 @@ export default function Navbar() {
                                     key={item.label}
                                     href={item.href}
                                     className={`relative text-sm transition-colors font-mono uppercase tracking-wider ${isActive
-                                            ? "text-white"
-                                            : "text-neutral-400 hover:text-white"
+                                        ? "text-white"
+                                        : "text-neutral-400 hover:text-white"
                                         }`}
                                 >
                                     {item.label}
@@ -89,12 +89,6 @@ export default function Navbar() {
                                 </a>
                             );
                         })}
-                        <a
-                            href="#contact"
-                            className="px-5 py-2 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-white text-sm font-bold hover:scale-105 transition-transform"
-                        >
-                            Hire Me
-                        </a>
                     </nav>
 
                     {/* Mobile Toggle */}
@@ -134,13 +128,6 @@ export default function Navbar() {
                                     </a>
                                 );
                             })}
-                            <a
-                                href="#contact"
-                                onClick={() => setIsMobileOpen(false)}
-                                className="mt-4 px-8 py-4 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-white text-center font-bold"
-                            >
-                                Hire Me
-                            </a>
                         </nav>
                     </motion.div>
                 )}

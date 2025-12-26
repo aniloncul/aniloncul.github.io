@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState, useCallback } from "react";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AppShowcase from "@/components/AppShowcase";
-import AboutSection from "@/components/AboutSection";
+import AboutTimeline from "@/components/AboutTimeline";
 import ContactSection from "@/components/ContactSection";
 import SectionIndicator from "@/components/SectionIndicator";
 
@@ -104,9 +104,7 @@ export default function Home() {
       </section>
 
       {/* About Section */}
-      <section id="about" className="fullpage-section">
-        <AboutSection />
-      </section>
+      <AboutTimeline parentRef={containerRef} />
 
       {/* Contact Section */}
       <section id="contact" className="fullpage-section">
