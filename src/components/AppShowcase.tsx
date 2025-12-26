@@ -21,6 +21,9 @@ import {
     Sparkles,
 } from "lucide-react";
 import WorkflowDiagram from "./WorkflowDiagram";
+import LingoCastWorkflow from "./LingoCastWorkflow";
+import ExploresBerlinWorkflow from "./ExploresBerlinWorkflow";
+import ExamCurratorWorkflow from "./ExamCurratorWorkflow";
 
 // Tech stack icons mapping
 const techIcons: Record<string, React.ReactNode> = {
@@ -53,29 +56,29 @@ const webApps = [
         description:
             "An educative AI platform that generates personalized language-learning podcasts on demand. Features real-time streaming generation, multi-speaker TTS synthesis, AI-generated cover art, and interactive comprehension quizzes.",
         gradient: "from-amber-600 via-orange-600 to-red-600",
-        screenshot: "https://images.unsplash.com/photo-1487180144351-b8472da7d491?w=1200&h=800&fit=crop",
+        screenshot: "/screenshots/lingocast.png",
         status: "live",
         link: "https://podcast-generator-delta.vercel.app/",
         techStack: {
             frontend: ["Next.js 16", "TypeScript", "TailwindCSS 4", "Framer Motion"],
-            backend: ["Python", "FastAPI", "Supabase"],
-            ai: ["Google Gemini 2.5 Flash", "Gemini TTS", "Hugging Face FLUX.1"],
-            orchestration: ["Streaming Response", "Async/Await"],
+            backend: ["Python", "FastAPI", "Supabase", "FFmpeg"],
+            ai: ["Gemini 2.5 Flash", "Imagen 4", "Gemini TTS"],
+            orchestration: ["Streaming Response", "Async Pipeline"],
             deployment: ["Vercel", "Render.com"],
         },
         workflowDescription:
             "User inputs topic, details, level, and grammar focus. Backend streams status updates while: 1) Gemini generates dialogue script with quiz questions, 2) HF FLUX creates cover art, 3) Gemini TTS synthesizes multi-speaker audio. Files are uploaded to Supabase Storage and optionally saved to database.",
         aiFeatures: [
-            "Gemini 2.5 Flash script generation with structured JSON output",
-            "Multi-speaker TTS with distinct voices (Zephyr & Puck)",
-            "FLUX.1-schnell AI image generation for cover art",
-            "Auto-generated comprehension quizzes",
+            "Podcast transcript generation",
+            "Multi-speaker podcast audio generation",
+            "AI Image generation for podcast cover art",
+            "Comprehensive quiz structure generation",
         ],
         pythonScripts: [
-            "Script generation with Google GenAI SDK",
-            "Hugging Face API integration for image generation",
-            "PCM to WAV audio format conversion",
-            "Supabase storage sync & upload utilities",
+            "WAV → MP3 audio encoding with FFmpeg",
+            "Multi-speaker TTS audio synthesis",
+            "Real-time SSE streaming pipeline",
+            "Supabase Storage upload & URL generation",
         ],
         workflowNodes: [
             { id: "1", label: "User Input", icon: "user" },
@@ -91,31 +94,31 @@ const webApps = [
         name: "Explores.Berlin",
         tagline: "AI-Augmented Event Discovery Platform",
         description:
-            "A curated, interactive map application for discovering underground events, exhibitions, and techno culture in Berlin. Built with a 'Techno-Rave Brutalist' aesthetic featuring viewport-consistent filtering, adaptive map markers, and a dark mode design system that reflects Berlin's club culture.",
+            "A curated, interactive map application for discovering underground events, exhibitions, and techno culture in Berlin. Features LLM-guided web scraping, semantic classification, and a split-panel UI with Google Maps integration.",
         gradient: "from-zinc-800 via-neutral-900 to-yellow-500",
-        screenshot: "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&h=800&fit=crop",
+        screenshot: "/screenshots/exploresberlin.png",
         status: "live",
         link: "https://explores.berlin/",
         techStack: {
-            frontend: ["Next.js 16", "TypeScript", "TailwindCSS 3.4", "Zustand", "React 19"],
-            backend: ["Node.js", "Supabase (PostgreSQL)"],
-            ai: ["LLM-Guided Web Scraping", "LLM Semantic Classification"],
-            orchestration: ["Model Context Protocol (MCP)", "Agentic AI Workflow"],
+            frontend: ["Next.js 14", "React 19", "TailwindCSS", "Zustand", "Google Maps API"],
+            backend: ["Node.js", "Supabase PostgreSQL"],
+            ai: ["LLM Web Scraping", "Semantic Classification"],
+            orchestration: ["ETL Scripts", "useMemo Pipeline"],
             deployment: ["Vercel", "Supabase"],
         },
         workflowDescription:
-            "Agentic AI workflow with MCP integration enables autonomous development: 1) Agent has direct file system/terminal access for loop-in-the-loop error correction, 2) LLM-guided scraping extracts event data from DOM, 3) LLM classification layer normalizes unstructured data into tagged metadata, 4) Data pipeline enriches Supabase database automatically.",
+            "Event Sites → LLM Scraper → CSV Data → LLM Classification → Node.js ETL → Supabase → Next.js → Maps UI",
         aiFeatures: [
-            "Model Context Protocol (MCP) for autonomous code development",
-            "LLM-guided web scraping with semantic DOM perception",
-            "LLM-based semantic classification for event categorization",
-            "Self-healing code through iterative error analysis",
+            "'Plan my Saturday' → AI generates full-day itinerary",
+            "Multi-stop route optimization on interactive map",
+            "Time-aware scheduling (opening hours, travel time)",
+            "AI curator: historical context & hidden gems for each stop",
         ],
         pythonScripts: [
-            "CSV parsing and data normalization scripts",
-            "Timezone adjustment utilities",
-            "Supabase sync and upload scripts",
-            "Category and recommendation validation scripts",
+            "LLM-guided web scraping that adapts to layout changes",
+            "Zero-shot event categorization (Techno, Exhibition, Dining)",
+            "Real-time geocoding with Berlin neighborhood mapping",
+            "Autonomous ETL pipeline to Supabase PostgreSQL",
         ],
         workflowNodes: [
             { id: "1", label: "Web Scraper", icon: "python" },
@@ -126,123 +129,50 @@ const webApps = [
         ],
     },
     {
-        id: 3,
-        name: "NeoFinance Dashboard",
-        tagline: "Intelligent Financial Analytics",
-        description:
-            "A sophisticated financial analytics dashboard that leverages AI to provide insights, predict trends, and automate portfolio management with real-time market data integration.",
-        gradient: "from-emerald-500 via-teal-500 to-cyan-600",
-        screenshot: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=800&fit=crop",
-        status: "live",
-        link: "#",
-        techStack: {
-            frontend: ["React", "TypeScript", "TailwindCSS"],
-            backend: ["Python", "FastAPI", "Supabase"],
-            ai: ["OpenAI", "LangChain"],
-            orchestration: ["Celery", "Redis"],
-            deployment: ["Vercel", "Docker", "GCP"],
+        "id": 3,
+        "name": "ExamCurrator",
+        "tagline": "Master Language Exams with Fine-Tuned AI",
+        "description": "An adaptive preparation platform for standardized language exams (Goethe, TOEFL, IELTS). It transforms static study materials into dynamic, exam-grade practice questions using custom fine-tuned LLMs.",
+        "gradient": "from-emerald-500 via-teal-500 to-cyan-600",
+        "screenshot": "/screenshots/examcurrator.png",
+        "status": "live",
+        "link": "https://examcurrator-960123097756.europe-west4.run.app/",
+        "techStack": {
+            "frontend": ["Vanilla JS", "CSS3", "HTML5"],
+            "backend": ["Python", "Flask", "Supabase"],
+            "ai": ["Gemini 1.5 Flash", "Vertex AI", "Fine-Tuned Endpoint"],
+            "orchestration": ["Regex", "Pandas", "PyMuPDF"],
+            "deployment": ["Docker", "Google Cloud Run"]
         },
-        workflowDescription:
-            "Real-time market data flows through a message queue system, processed by Python workers for technical analysis. AI agents continuously monitor portfolio performance and trigger alerts.",
-        aiFeatures: [
-            "Natural language portfolio queries",
-            "Predictive trend analysis",
-            "Automated report generation",
+        "workflowDescription": "Official YDS exam PDFs (German, English, French, Russian) are parsed using advanced Regex patterns to extract structured question data. This clean dataset fine-tunes Gemini models via Vertex AI to replicate specific question styles and difficulty. The Flask backend orchestrates generation requests with Supabase handling user auth and performance tracking.",
+        "aiFeatures": [
+            "Domain-Specific Fine-Tuning: Custom Gemini model trained on 500+ official YDS questions to replicate difficulty, distractor logic, and linguistic patterns.",
+            "Contextual Explanations: AI-generated explanations for each question, breaking down grammar rules and vocabulary in the target language.",
+            "Performance Analytics Agent: Tracks user answers to identify weak categories, recommend study areas, and build personalized vocabulary lists."
         ],
-        pythonScripts: [
-            "Real-time data ingestion",
-            "Technical indicator calculations",
-            "Portfolio optimization",
+        "pythonScripts": [
+            "PDF Parsing & Structure Extraction (pdf_extractor.py)",
+            "Dataset Cleaning & JSONL Formatting for Vertex AI",
+            "Quiz Data Generation & Enrichment Pipeline"
         ],
-        workflowNodes: [
-            { id: "1", label: "Market API", icon: "api" },
-            { id: "2", label: "Python", icon: "python" },
-            { id: "3", label: "OpenAI", icon: "openai" },
-            { id: "4", label: "Database", icon: "database" },
-            { id: "5", label: "React", icon: "react" },
-        ],
+        "workflowNodes": [
+            { "id": "1", "label": "YDS PDFs", "icon": "pdf" },
+            { "id": "2", "label": "Regex Extraction", "icon": "regex" },
+            { "id": "3", "label": "Dataset (JSONL)", "icon": "json" },
+            { "id": "4", "label": "Vertex AI Tuning", "icon": "cloud" },
+            { "id": "5", "label": "Exam Generation", "icon": "gemini" },
+            { "id": "6", "label": "Interactive UI", "icon": "browser" }
+        ]
+
     },
-    {
-        id: 4,
-        name: "MindFlow Workspace",
-        tagline: "Your AI-Enhanced Second Brain",
-        description:
-            "A next-generation knowledge management platform that combines note-taking, task management, and AI assistance. Automatically organizes your thoughts and surfaces relevant information.",
-        gradient: "from-orange-500 via-rose-500 to-pink-600",
-        screenshot: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=1200&h=800&fit=crop",
-        status: "beta",
-        link: "#",
-        techStack: {
-            frontend: ["Next.js", "TypeScript", "TailwindCSS", "Zustand"],
-            backend: ["Python", "FastAPI", "PostgreSQL"],
-            ai: ["OpenAI", "LangChain"],
-            orchestration: ["Celery", "Redis", "n8n"],
-            deployment: ["Vercel", "Docker", "AWS"],
-        },
-        workflowDescription:
-            "Every note is automatically processed through an AI pipeline: content extraction, semantic analysis, and relationship mapping. n8n workflows handle cross-platform syncing.",
-        aiFeatures: [
-            "Automatic tagging & categorization",
-            "Smart linking between notes",
-            "AI writing assistant",
-        ],
-        pythonScripts: [
-            "Text extraction & parsing",
-            "Knowledge graph construction",
-            "Embedding generation",
-        ],
-        workflowNodes: [
-            { id: "1", label: "User", icon: "user" },
-            { id: "2", label: "Next.js", icon: "nextjs" },
-            { id: "3", label: "FastAPI", icon: "fastapi" },
-            { id: "4", label: "OpenAI", icon: "openai" },
-            { id: "5", label: "PostgreSQL", icon: "database" },
-        ],
-    },
-    {
-        id: 5,
-        name: "DataFlow Orchestrator",
-        tagline: "Enterprise Workflow Automation",
-        description:
-            "A powerful workflow automation platform that connects disparate systems, processes complex data transformations, and provides real-time monitoring for enterprise data pipelines.",
-        gradient: "from-blue-600 via-indigo-600 to-violet-600",
-        screenshot: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=800&fit=crop",
-        status: "live",
-        link: "#",
-        techStack: {
-            frontend: ["Next.js", "TypeScript", "TailwindCSS"],
-            backend: ["Python", "FastAPI", "PostgreSQL"],
-            ai: ["OpenAI"],
-            orchestration: ["Celery", "Redis", "n8n"],
-            deployment: ["Docker", "AWS"],
-        },
-        workflowDescription:
-            "The platform uses n8n as the visual workflow builder, with custom Python nodes for specialized data transformations. Celery workers handle heavy processing tasks.",
-        aiFeatures: [
-            "Anomaly detection in data flows",
-            "Natural language workflow creation",
-            "Predictive maintenance alerts",
-        ],
-        pythonScripts: [
-            "Custom transformation nodes",
-            "API integration adapters",
-            "Schema validation & mapping",
-        ],
-        workflowNodes: [
-            { id: "1", label: "API Input", icon: "api" },
-            { id: "2", label: "n8n", icon: "nodejs" },
-            { id: "3", label: "Python", icon: "python" },
-            { id: "4", label: "OpenAI", icon: "openai" },
-            { id: "5", label: "Database", icon: "database" },
-        ],
-    },
+
 ];
 
 function TechBadge({ tech }: { tech: string }) {
     return (
         <div className="flex items-center gap-1 px-2 py-0.5 bg-white/5 rounded border border-white/10 hover:bg-white/10 transition-all">
             <span className="text-indigo-400">{techIcons[tech] || <Code2 size={12} />}</span>
-            <span className="text-[16px] text-neutral-300">{tech}</span>
+            <span className="text-xs md:text-sm text-neutral-300">{tech}</span>
         </div>
     );
 }
@@ -288,7 +218,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     <div className="relative">
                         {/* Screenshot */}
                         <div
-                            className="absolute inset-0 bg-cover bg-center"
+                            className="absolute inset-0 bg-contain bg-top bg-no-repeat bg-neutral-900"
                             style={{ backgroundImage: `url(${app.screenshot})` }}
                         />
                         <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-40 mix-blend-overlay`} />
@@ -321,10 +251,10 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         </h4>
 
                         {/* Tech Categories Grid */}
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {/* Frontend */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-[16px] text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm md:text-base text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Globe size={14} /> Frontend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -336,7 +266,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Backend */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-[16px] text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm md:text-base text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Server size={14} /> Backend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -346,21 +276,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                                 </div>
                             </div>
 
-                            {/* AI */}
-                            <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-[16px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Bot size={14} /> AI & ML
-                                </div>
-                                <div className="flex flex-wrap gap-1">
-                                    {app.techStack.ai.map((tech) => (
-                                        <TechBadge key={tech} tech={tech} />
-                                    ))}
-                                </div>
-                            </div>
-
                             {/* Orchestration */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-[16px] text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm md:text-base text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Workflow size={14} /> Orchestration
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -369,38 +287,46 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                                     ))}
                                 </div>
                             </div>
-                        </div>
 
-                        {/* Deployment */}
-                        <div className="glass rounded-lg p-2 border border-white/5">
-                            <div className="text-[16px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                <Cloud size={14} /> Deployment
-                            </div>
-                            <div className="flex flex-wrap gap-1">
-                                {app.techStack.deployment.map((tech) => (
-                                    <TechBadge key={tech} tech={tech} />
-                                ))}
+                            {/* Deployment */}
+                            <div className="glass rounded-lg p-2 border border-white/5">
+                                <div className="text-sm md:text-base text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                    <Cloud size={14} /> Deployment
+                                </div>
+                                <div className="flex flex-wrap gap-1">
+                                    {app.techStack.deployment.map((tech) => (
+                                        <TechBadge key={tech} tech={tech} />
+                                    ))}
+                                </div>
                             </div>
                         </div>
 
                         {/* Workflow Diagram - n8n style visual */}
-                        <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5">
-                            <div className="text-[14px] text-amber-400 uppercase tracking-wider mb-1 flex items-center gap-1">
+                        <div className="glass rounded-lg p-4 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5 min-h-[140px]">
+                            <div className="text-xs md:text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                 <Workflow size={14} /> Workflow Pipeline
                             </div>
-                            <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
+                            {app.id === 1 ? (
+                                <LingoCastWorkflow />
+                            ) : app.id === 2 ? (
+                                <ExploresBerlinWorkflow />
+                            ) : app.id === 3 ? (
+                                <ExamCurratorWorkflow />
+                            ) : (
+                                <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
+                            )}
                         </div>
 
                         {/* AI & Python Grid */}
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             {/* AI Features */}
                             <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                                <div className="text-[16px] text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm md:text-base text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Bot size={14} /> AI Features
                                 </div>
                                 <ul className="space-y-1">
                                     {app.aiFeatures.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-[16px] text-neutral-400">
+                                        <li key={idx} className="flex items-start gap-1 text-sm md:text-base text-neutral-400">
                                             <Sparkles size={14} className="text-purple-400 mt-0.5 shrink-0" />
                                             {feature}
                                         </li>
@@ -410,12 +336,12 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Python Scripts */}
                             <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-blue-500/5 to-cyan-500/5">
-                                <div className="text-[16px] text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm md:text-base text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Terminal size={14} /> Python Scripts
                                 </div>
                                 <ul className="space-y-1">
                                     {app.pythonScripts.map((script, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-[16px] text-neutral-400">
+                                        <li key={idx} className="flex items-start gap-1 text-sm md:text-base text-neutral-400">
                                             <Code2 size={14} className="text-cyan-400 mt-0.5 shrink-0" />
                                             {script}
                                         </li>
@@ -478,31 +404,11 @@ export default function AppShowcase() {
     };
 
     return (
-        <section id="apps" className="relative h-full flex flex-col justify-center overflow-hidden py-8">
+        <section id="apps" className="relative min-h-screen flex flex-col justify-center overflow-hidden py-8">
             {/* Background */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
                 <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-indigo-500/10 rounded-full blur-3xl" />
                 <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl" />
-            </div>
-
-            {/* Header */}
-            <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 mb-6 lg:mb-10 relative z-10">
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-center"
-                >
-                    <span className="text-xs md:text-sm font-mono text-indigo-400 uppercase tracking-widest mb-3 block">
-                        Featured Work
-                    </span>
-                    <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bebas text-white mb-4">
-                        Web Applications I&apos;ve Built
-                    </h2>
-                    <p className="text-sm md:text-base lg:text-lg text-neutral-400 max-w-2xl mx-auto">
-                        Full-stack applications powered by modern frameworks, AI integrations, and automated workflows.
-                    </p>
-                </motion.div>
             </div>
 
             {/* Carousel */}

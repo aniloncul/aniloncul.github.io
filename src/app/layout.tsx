@@ -24,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${bebasNeue.variable} ${jetbrainsMono.variable} antialiased bg-neutral-950 text-neutral-100 overflow-x-hidden`}
       >
