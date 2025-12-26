@@ -1,0 +1,29 @@
+Initializing n8n process
+n8n ready on ::, port 5678
+n8n Task Broker ready on 127.0.0.1, port 5679
+Failed to start Python task runner in internal mode. because its virtual environment is missing from this system. Launching a Python runner in internal mode is intended only for debugging and is not recommended for production. Users are encouraged to deploy in external mode. See: https://docs.n8n.io/hosting/configuration/task-runners/#setting-up-external-mode
+[license SDK] Skipping renewal on init: license cert is not initialized
+Registered runner "JS Task Runner" (Dg1yLe9Ef-48VaTrUlx5D) 
+Version: 2.1.4
+
+Editor is now accessible via:
+http://localhost:5678
+(node:29688) [DEP0060] DeprecationWarning: The `util._extend` API is deprecated. Please use Object.assign() instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Owner was set up successfully
+User attempted to access a workflow without permissions
+404 Could not load the workflow - you can only access workflows owned by you
+User survey updated successfully
+The resource you are requesting could not be found
+The resource you are requesting could not be found
+ResponseError: The requested webhook "POST contact-form" is not registered.
+    at LiveWebhooks.findWebhook (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/n8n/src/webhooks/live-webhooks.ts:184:10)
+    at LiveWebhooks.findAccessControlOptions (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/n8n/src/webhooks/live-webhooks.ts:45:19)
+    at WebhookRequestHandler.setupCorsHeaders (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/n8n/src/webhooks/webhook-request-handler.ts:216:20)
+    at WebhookRequestHandler.handleRequest (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/n8n/src/webhooks/webhook-request-handler.ts:55:27)
+    at /Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/n8n/src/webhooks/webhook-request-handler.ts:257:3
+Received SIGTERM. Shutting down...
+[runnner:js] Received SIGTERM signal, shutting down...
+[runnner:js] Task runner stopped
+
+Stopping n8n...

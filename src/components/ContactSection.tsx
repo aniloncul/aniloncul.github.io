@@ -7,7 +7,7 @@ import { Github, Linkedin, Send } from "lucide-react";
 export default function ContactSection() {
     // ⬇️ FOR GITHUB PAGES: Use your Public n8n URL (starts with https://...)
     // If testing locally, http://localhost:5678 is fine.
-    const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.app/webhook/contact-form";
+    const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.dev/webhook/contact-form";
 
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
