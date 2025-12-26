@@ -5,8 +5,9 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Send } from "lucide-react";
 
 export default function ContactSection() {
-    // We now send to our own Next.js API route to avoid CORS errors
-    const API_URL = "/api/contact";
+    // ⬇️ FOR GITHUB PAGES: Use your Public n8n URL (starts with https://...)
+    // If testing locally, http://localhost:5678 is fine.
+    const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.app/webhook/contact-form";
 
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
@@ -17,14 +18,17 @@ export default function ContactSection() {
         setStatus("sending");
 
         try {
-            // Send data to Local API Proxy
-            const res = await fetch(API_URL, {
+            // Direct fetch to n8n (Client-Side)
+            const res = await fetch(N8N_WEBHOOK_URL, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "ngrok-skip-browser-warning": "true"
+                },
                 body: JSON.stringify({ subject, message }),
             });
 
-            if (!res.ok) throw new Error("API failed");
+            if (!res.ok) throw new Error("Webhook failed");
 
             setStatus("success");
             setSubject("");
