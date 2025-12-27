@@ -57,7 +57,7 @@ export const experiences: Experience[] = [
         location: "Berlin",
         coordinates: [52.52, 13.405],
         period: "Sep 2023 - Aug 2024",
-        summary: "Specialized in Generative AI for native mobile language learning applications.",
+        summary: "Specialized in Generative AI and native mobile application development.",
         type: "education"
     },
     {
