@@ -42,13 +42,23 @@ export const experiences: Experience[] = [
     },
     {
         id: "kocsistem",
-        role: "Data Scientist (Intern)",
+        role: "Software Engineer (Intern)",
         company: "KoçSistem",
         location: "Ankara (remote)",
         coordinates: [39.93, 32.85],
         period: "Aug 2024 - Oct 2024",
-        summary: "Performed exploratory data analysis on large datasets to identify critical trends and inform business strategies.",
+        summary: "Worked with back-end and front-end teams to develop a full-stack application using C# and .NET Core.",
         type: "work"
+    },
+    {
+        id: "edu-ue",
+        role: "M.Sc. Software Engineering",
+        company: "University of Europe for Applied Sciences",
+        location: "Berlin",
+        coordinates: [52.52, 13.405],
+        period: "Sep 2023 - Aug 2024",
+        summary: "Specialized in Generative AI for native mobile language learning applications.",
+        type: "education"
     },
     {
         id: "acterys",
@@ -80,16 +90,7 @@ export const experiences: Experience[] = [
         summary: "Analyzed TBM sensor data to optimize excavation strategies and visualize key performance indicators.",
         type: "work"
     },
-    {
-        id: "edu-ue",
-        role: "M.Sc. Software Engineering",
-        company: "University of Europe for Applied Sciences",
-        location: "Berlin",
-        coordinates: [52.52, 13.405],
-        period: "Graduated",
-        summary: "Specialized in Generative AI for native mobile language learning applications.",
-        type: "education"
-    },
+
     {
         id: "edu-ogu",
         role: "B.Sc. Civil Engineering",

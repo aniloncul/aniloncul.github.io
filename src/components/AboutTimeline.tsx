@@ -80,12 +80,11 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
             {/* Sticky Container for Visuals */}
             <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col md:flex-row justify-between items-center px-4 md:px-12">
 
-                {/* Background 3D Globe (Absolute or behind) - Shifted Left via Container */}
-                <div className="absolute inset-0 z-0 opacity-40 md:opacity-100 -translate-x-[10%]">
-                    <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+                {/* Left Side: 3D Globe - Width 50% */}
+                <div className="absolute left-0 top-0 h-full w-[50%] z-0">
+                    <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }}>
                         <ambientLight intensity={0.5} />
                         <pointLight position={[10, 10, 10]} />
-                        {/* We use a specialized component to bridge scroll to 3D */}
                         <React.Suspense fallback={null}>
                             <ScrollBridge
                                 scrollYProgress={scrollYProgress}
@@ -95,84 +94,29 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                             />
                         </React.Suspense>
                     </Canvas>
-                </div>
 
-                {/* Left Side: Animated Timeline UI - Fixed Left Column */}
-                <div className="relative z-10 hidden md:flex flex-col w-24 h-full items-center justify-center pointer-events-none">
-                    <div
-                        ref={lineRef}
-                        className="relative h-[60%] w-px bg-white/10 cursor-pointer pointer-events-auto group"
-                        onPointerDown={(e) => {
-                            isScrubbing.current = true;
-                            if (parentRef?.current) {
-                                parentRef.current.style.scrollBehavior = "auto";
-                            }
-                            handleScrub(e);
-                            document.body.style.cursor = "grabbing";
-                        }}
-                    >
-                        {/* Invisible Hit Area for easier grabbing */}
-                        <div className="absolute inset-y-0 -left-6 -right-6 z-20" />
-
-                        {/* Moving indicator */}
-                        <motion.div
-                            style={{ height: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
-                            className="absolute top-0 left-0 w-full bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"
-                        />
-                        {/* Moving glowing dot */}
-                        <motion.div
-                            style={{ top: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
-                            className="absolute -left-1.5 w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
-                        />
-
-                        {/* Labels MOVED TO RIGHT of the line */}
-                        <div className="absolute left-6 top-0 -translate-y-1/2 w-48 text-left pointer-events-none">
-                            <h3 className="text-4xl font-bebas text-white/30">PRESENT</h3>
-                        </div>
-                        <div className="absolute left-6 bottom-0 translate-y-1/2 w-48 text-left pointer-events-none">
-                            <h3 className="text-4xl font-bebas text-white/30">PAST</h3>
-                        </div>
-                    </div>
-                </div>
-
-                {/* Middle Spacer (Invisible) to push content apart */}
-                <div className="flex-1" />
-
-                {/* Right Side: Active Experience Card - Fixed Right Column */}
-                <div className="relative z-10 w-full md:w-1/3 min-w-[320px] h-full flex items-center justify-end pointer-events-none">
-                    {/* We show ONLY the active card with a nice transition */}
-                    <div className="relative w-full">
-                        {experiences.map((exp, index) => (
-                            <ExperienceCard
-                                key={exp.id}
-                                experience={exp}
-                                isActive={index === activeIndex}
+                    {/* Manual Controls - Centered under Globe */}
+                    {/* Manual Controls - Centered under Globe */}
+                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-end">
+                        {/* Rotate Slider (Centered) */}
+                        <div className="flex flex-col items-center gap-2">
+                            <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Rotate</span>
+                            <input
+                                type="range"
+                                min="0"
+                                max="1"
+                                step="0.001"
+                                value={manualRotation}
+                                onChange={(e) => setManualRotation(parseFloat(e.target.value))}
+                                className="w-60 h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
                             />
-                        ))}
-                    </div>
-                </div>
-
-                {/* Manual Controls Container - Bottom Center of Globe */}
-                <div className="absolute bottom-8 left-[42%] -translate-x-1/2 z-50 pointer-events-auto flex items-end gap-16">
-                    {/* Rotate Slider (Horizontal) */}
-
-                    <div className="flex flex-col items-center gap-2 w-120">
-                        <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Rotate</span>
-                        <input
-                            type="range"
-                            min="0"
-                            max="1"
-                            step="0.001"
-                            value={manualRotation}
-                            onChange={(e) => setManualRotation(parseFloat(e.target.value))}
-                            className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
-                        />
+                        </div>
                     </div>
 
-                    {/* Tilt Slider (Vertical) */}
-                    <div className="flex flex-col items-center gap-1 mb-2">
-                        <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono mb-">Tilt</span>
-                        <div className="relative w-4 h-32 flex items-center justify-center">
+                    {/* Tilt Slider (Independent - Moved Right) */}
+                    <div className="absolute bottom-8 left-[80%] -translate-x-1/2 z-50 pointer-events-auto flex flex-col items-center gap-1 mb-2">
+                        <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Tilt</span>
+                        <div className="relative w-4 h-24 flex items-center justify-center">
                             <input
                                 type="range"
                                 min="-0.5"
@@ -180,81 +124,147 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                 step="0.001"
                                 value={manualTilt}
                                 onChange={(e) => setManualTilt(parseFloat(e.target.value))}
-                                className="absolute w-32 h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-pink-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
+                                className="absolute w-24 h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-pink-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
                             />
                         </div>
                     </div>
                 </div>
+
+                {/* Right Side Container: Timeline + Cards (Width 50%) */}
+                <div className="absolute right-0 top-0 h-full w-[50%] flex flex-row items-center justify-start pl-8 pr-4">
+
+                    {/* 1. Timeline Bar */}
+                    <div className="relative z-10 w-12 h-[75%] flex flex-col items-center justify-center pointer-events-none">
+                        <div
+                            ref={lineRef}
+                            className="relative h-full w-px bg-white/10 cursor-pointer pointer-events-auto group"
+                            onPointerDown={(e) => {
+                                isScrubbing.current = true;
+                                if (parentRef?.current) parentRef.current.style.scrollBehavior = "auto";
+                                handleScrub(e);
+                                document.body.style.cursor = "grabbing";
+                            }}
+                        >
+                            {/* Hit Area */}
+                            <div className="absolute inset-y-0 -left-6 -right-6 z-20" />
+
+                            {/* Progress Fill */}
+                            <motion.div
+                                style={{ height: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
+                                className="absolute top-0 left-0 w-full bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"
+                            />
+                            {/* Knob */}
+                            <motion.div
+                                style={{ top: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
+                                className="absolute -left-1.5 w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                            />
+
+                            {/* Labels */}
+                            <div className="absolute left-6 top-0 -translate-y-1/2 text-left pointer-events-none">
+                                <h3 className="text-sm font-bold text-white/50 tracking-widest">PRESENT</h3>
+                            </div>
+                            <div className="absolute left-6 bottom-0 translate-y-1/2 text-left pointer-events-none">
+                                <h3 className="text-sm font-bold text-white/50 tracking-widest">PAST</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* 2. Cards Stack (Fish-eye List) */}
+                    <div className="relative flex-1 h-[80%] ml-12">
+                        {experiences.map((exp, index) => {
+                            // Calculate percentage position (10% top, 90% bottom) to avoid cut-off
+                            // We map index 0 -> 10%, last index -> 90%
+                            const rangeMin = 15;
+                            const rangeMax = 95;
+                            const percent = rangeMin + (index / (experiences.length - 1)) * (rangeMax - rangeMin);
+
+                            const isActive = index === activeIndex;
+
+                            return (
+                                <ExperienceCard
+                                    key={exp.id}
+                                    experience={exp}
+                                    isActive={isActive}
+                                    style={{ top: `${percent}%` }}
+                                />
+                            );
+                        })}
+                    </div>
+
+                </div>
+
             </div>
 
-            {/* Scroll overlay gradient at bottom to blend */}
+            {/* Bottom Fade */}
             <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-neutral-950 to-transparent pointer-events-none" />
         </section>
     );
 }
 
-// Sub-component to inject scroll value into Canvas (since Canvas is isolated context)
+// Bridge for Scroll -> Canvas
 function ScrollBridge({ scrollYProgress, activeCoords, manualRotation, manualTilt }: { scrollYProgress: any, activeCoords: [number, number], manualRotation: number, manualTilt: number }) {
     const [progress, setProgress] = useState(0);
     useMotionValueEvent(scrollYProgress, "change", (val) => setProgress(Number(val)));
     return <ThreeGlobe scrollProgress={progress} activeCoords={activeCoords} manualRotation={manualRotation} manualTilt={manualTilt} />;
 }
 
-function ExperienceCard({ experience, isActive }: { experience: Experience; isActive: boolean }) {
+// Card Component with Absolute Positioning prop
+function ExperienceCard({ experience, isActive, style }: { experience: Experience; isActive: boolean; style: React.CSSProperties }) {
     return (
         <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            style={style}
             animate={{
-                opacity: isActive ? 1 : 0,
-                y: isActive ? 0 : -50,
-                scale: isActive ? 1 : 0.9,
-                pointerEvents: isActive ? "auto" : "none"
+                scale: isActive ? 1 : 0.65,
+                opacity: isActive ? 1 : 0.5,
+                x: isActive ? 0 : 20,
+                zIndex: isActive ? 50 : 0
             }}
-            transition={{ duration: 0.5, ease: "circOut" }}
-            className="absolute top-1/2 left-0 right-0 -translate-y-1/2 glass p-6 md:p-8 rounded-2xl border border-white/10"
+            transition={{ duration: 0.4, ease: "backOut" }}
+            className="absolute left-0 w-full max-w-xl -translate-y-1/2 origin-left pointer-events-none"
         >
-            <div className="flex items-start justify-between mb-4">
-                <div>
-                    <h3 className="text-2xl md:text-3xl font-bebas text-white mb-1">{experience.role}</h3>
-                    <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm md:text-base">
-                        {experience.type === "work" ? <Briefcase size={16} /> : <GraduationCap size={16} />}
-                        <span>{experience.company}</span>
+            <div className={`
+                glass rounded-xl border border-white/10 transition-all duration-300
+                ${isActive ? "p-6 md:p-8 bg-white/5 backdrop-blur-md shadow-2xl" : "p-3 bg-white/5 border-transparent"}
+            `}>
+                <div className="flex items-center justify-between">
+                    <div>
+                        <h3 className={`font-bebas text-white transition-all ${isActive ? "text-3xl mb-1" : "text-xl text-white/70"}`}>
+                            {experience.role}
+                        </h3>
+                        {isActive && (
+                            <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm">
+                                <Briefcase size={14} />
+                                <span>{experience.company}</span>
+                            </div>
+                        )}
+                        {!isActive && (
+                            <span className="text-white/50 text-xs font-mono">{experience.company}</span>
+                        )}
                     </div>
+
+                    {isActive && (
+                        <div className="text-right hidden sm:block">
+                            <h4 className="text-neutral-400 text-sm">{experience.period}</h4>
+                        </div>
+                    )}
                 </div>
-                <div className="text-right hidden sm:block">
-                    <div className="flex items-center justify-end gap-1 text-neutral-400 text-xs md:text-sm mb-1">
-                        <Calendar size={14} />
-                        <span>{experience.period}</span>
-                    </div>
-                    <div className="flex items-center justify-end gap-1 text-neutral-400 text-xs md:text-sm">
-                        <MapPin size={14} />
-                        <span>{experience.location}</span>
-                    </div>
-                </div>
+
+                {isActive && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        className="mt-4 overflow-hidden"
+                    >
+                        <p className="text-neutral-300 text-sm leading-relaxed border-l-2 border-indigo-500 pl-3">
+                            {experience.summary}
+                        </p>
+                        <div className="flex gap-4 mt-3 text-xs text-neutral-500 font-mono">
+                            <span className="flex items-center gap-1"><MapPin size={12} /> {experience.location}</span>
+                            <span className="flex items-center gap-1"><Calendar size={12} /> {experience.period}</span>
+                        </div>
+                    </motion.div>
+                )}
             </div>
-
-            {/* Mobile Date/Location shown below header */}
-            <div className="flex flex-wrap gap-4 mb-4 sm:hidden text-neutral-400 text-xs">
-                <div className="flex items-center gap-1">
-                    <Calendar size={14} />
-                    <span>{experience.period}</span>
-                </div>
-                <div className="flex items-center gap-1">
-                    <MapPin size={14} />
-                    <span>{experience.location}</span>
-                </div>
-            </div>
-
-            <p className="text-neutral-300 leading-relaxed text-sm md:text-base">
-                {experience.summary}
-            </p>
-
-            <motion.div
-                className="mt-6 h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: isActive ? 80 : 0 }}
-                transition={{ delay: 0.2, duration: 0.4 }}
-            />
         </motion.div>
     );
 }
