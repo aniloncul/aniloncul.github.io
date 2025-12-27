@@ -9,6 +9,7 @@ export default function ContactSection() {
     // If testing locally, http://localhost:5678 is fine.
     const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.dev/webhook/contact-form";
 
+    const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
     const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
@@ -25,12 +26,13 @@ export default function ContactSection() {
                     "Content-Type": "application/json",
                     "ngrok-skip-browser-warning": "true"
                 },
-                body: JSON.stringify({ subject, message }),
+                body: JSON.stringify({ email, subject, message }),
             });
 
             if (!res.ok) throw new Error("Webhook failed");
 
             setStatus("success");
+            setEmail("");
             setSubject("");
             setMessage("");
 
@@ -59,8 +61,18 @@ export default function ContactSection() {
                     <form onSubmit={handleSend} className="flex flex-col gap-4">
                         <div>
                             <input
+                                type="email"
+                                placeholder="Your Email *"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                                required
+                            />
+                        </div>
+                        <div>
+                            <input
                                 type="text"
-                                placeholder="Subject"
+                                placeholder="Subject *"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
                                 className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors"
@@ -69,7 +81,7 @@ export default function ContactSection() {
                         </div>
                         <div>
                             <textarea
-                                placeholder="Message"
+                                placeholder="Message *"
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                                 rows={4}
