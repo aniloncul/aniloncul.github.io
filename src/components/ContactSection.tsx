@@ -93,7 +93,7 @@ export default function ContactSection() {
                             ) : (
                                 <>
                                     <Send size={18} />
-                                    Send to Telegram
+                                    Send your message
                                 </>
                             )}
                         </button>
@@ -128,6 +128,6 @@ export default function ContactSection() {
             <div className="absolute bottom-4 left-0 w-full text-center text-neutral-600 text-sm">
                 <p>© 2025 Anil Oncul. All rights reserved.</p>
             </div>
-        </section>
+        </section >
     );
 }
