@@ -98,7 +98,7 @@ const webApps = [
         gradient: "from-zinc-800 via-neutral-900 to-yellow-500",
         screenshot: "/screenshots/exploresberlin.png",
         status: "live",
-        link: "https://explores.berlin/",
+        link: "https://explores-berlin.vercel.app/",
         techStack: {
             frontend: ["Next.js 14", "React 19", "TailwindCSS", "Zustand", "Google Maps API"],
             backend: ["Node.js", "Supabase PostgreSQL"],
@@ -235,6 +235,8 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             <a
                                 href={app.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className={`inline-flex items-center gap-2 px-4 py-2 lg:px-6 lg:py-3 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-sm lg:text-base font-medium hover:shadow-lg hover:scale-105 transition-all w-fit`}
                             >
                                 View Project <ExternalLink size={16} className="lg:w-5 lg:h-5" />
