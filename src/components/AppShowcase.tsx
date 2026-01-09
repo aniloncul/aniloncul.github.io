@@ -178,6 +178,12 @@ function TechBadge({ tech }: { tech: string }) {
 }
 
 function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boolean }) {
+    const [expandedSection, setExpandedSection] = useState<string | null>(null);
+
+    const toggleSection = (section: string) => {
+        setExpandedSection(expandedSection === section ? null : section);
+    };
+
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -185,35 +191,263 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
             transition={{ duration: 0.4, ease: "easeOut" }}
             className={`relative w-full mx-auto ${isActive ? "z-10" : "z-0"}`}
         >
-            <div className="glass rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors">
+            <div className="glass rounded-xl md:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors">
                 {/* Browser Chrome */}
-                <div className="bg-neutral-800/80 px-3 py-2 flex items-center gap-2 border-b border-white/10">
-                    <div className="flex gap-1.5">
-                        <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-                        <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
+                <div className="bg-neutral-800/80 px-2 py-1.5 md:px-3 md:py-2 flex items-center gap-2 border-b border-white/10">
+                    <div className="flex gap-1 md:gap-1.5">
+                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500" />
+                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500" />
+                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500" />
                     </div>
-                    <div className="flex-1 mx-3">
-                        <div className="bg-neutral-700/50 rounded px-3 py-1 text-[10px] text-neutral-400 font-mono flex items-center gap-1.5">
-                            <Globe size={10} />
-                            {`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}
+                    <div className="flex-1 mx-1 md:mx-3">
+                        <div className="bg-neutral-700/50 rounded px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] text-neutral-400 font-mono flex items-center gap-1 md:gap-1.5 truncate">
+                            <Globe size={8} className="md:w-[10px] md:h-[10px] shrink-0" />
+                            <span className="truncate">{`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
                         </div>
                     </div>
                     {app.status === "beta" && (
-                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-gradient-to-r from-orange-500 to-pink-500 rounded-full text-white">
+                        <span className="px-1.5 py-0.5 text-[8px] md:text-[10px] font-bold uppercase bg-gradient-to-r from-orange-500 to-pink-500 rounded-full text-white shrink-0">
                             Beta
                         </span>
                     )}
                     {app.status === "live" && (
-                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full text-white flex items-center gap-1">
+                        <span className="px-1.5 py-0.5 text-[8px] md:text-[10px] font-bold uppercase bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full text-white flex items-center gap-1 shrink-0">
                             <span className="w-1 h-1 bg-white rounded-full animate-pulse" />
                             Live
                         </span>
                     )}
                 </div>
 
-                {/* Split Layout: Left (Preview) | Right (Tech Stack) - Responsive height based on viewport */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[300px] md:min-h-[400px] lg:min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px]">
+                {/* MOBILE LAYOUT (< lg) - Stacked vertical layout */}
+                <div className="lg:hidden">
+                    {/* Screenshot Section - Compact for mobile */}
+                    <div className="relative h-[200px] sm:h-[250px]">
+                        <div
+                            className="absolute inset-0 bg-cover bg-center bg-neutral-900"
+                            style={{ backgroundImage: `url(${app.screenshot})` }}
+                        />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-30 mix-blend-overlay`} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/80 to-transparent" />
+
+                        {/* Content overlay */}
+                        <div className="absolute inset-0 flex flex-col justify-end p-4">
+                            <h3 className={`text-2xl sm:text-3xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
+                                {app.name}
+                            </h3>
+                            <p className="text-xs sm:text-sm text-neutral-300 font-medium mb-2">{app.tagline}</p>
+                            <a
+                                href={app.link}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-xs font-medium hover:scale-105 transition-all w-fit`}
+                            >
+                                View Project <ExternalLink size={12} />
+                            </a>
+                        </div>
+                    </div>
+
+                    {/* Description - Mobile */}
+                    <div className="p-3 bg-neutral-900/90 border-t border-white/5">
+                        <p className="text-xs text-neutral-400 leading-relaxed line-clamp-3">{app.description}</p>
+                    </div>
+
+                    {/* Collapsible Tech Sections - Mobile */}
+                    <div className="bg-neutral-900/80 divide-y divide-white/5">
+                        {/* Tech Stack - Collapsed by default */}
+                        <div>
+                            <button
+                                onClick={() => toggleSection('tech')}
+                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
+                            >
+                                <span className="text-xs font-medium text-white flex items-center gap-2">
+                                    <Layers className="text-indigo-400" size={14} />
+                                    Tech Stack
+                                </span>
+                                <ChevronRight
+                                    size={16}
+                                    className={`text-neutral-400 transition-transform ${expandedSection === 'tech' ? 'rotate-90' : ''}`}
+                                />
+                            </button>
+                            <AnimatePresence>
+                                {expandedSection === 'tech' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="px-3 pb-3 grid grid-cols-2 gap-2">
+                                            <div className="glass rounded-lg p-2 border border-white/5">
+                                                <div className="text-[10px] text-indigo-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                                                    <Globe size={10} /> Frontend
+                                                </div>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {app.techStack.frontend.map((tech) => (
+                                                        <TechBadge key={tech} tech={tech} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="glass rounded-lg p-2 border border-white/5">
+                                                <div className="text-[10px] text-emerald-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                                                    <Server size={10} /> Backend
+                                                </div>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {app.techStack.backend.map((tech) => (
+                                                        <TechBadge key={tech} tech={tech} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="glass rounded-lg p-2 border border-white/5">
+                                                <div className="text-[10px] text-amber-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                                                    <Workflow size={10} /> Orchestration
+                                                </div>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {app.techStack.orchestration.map((tech) => (
+                                                        <TechBadge key={tech} tech={tech} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                            <div className="glass rounded-lg p-2 border border-white/5">
+                                                <div className="text-[10px] text-cyan-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
+                                                    <Cloud size={10} /> Deploy
+                                                </div>
+                                                <div className="flex flex-wrap gap-1">
+                                                    {app.techStack.deployment.map((tech) => (
+                                                        <TechBadge key={tech} tech={tech} />
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Workflow Pipeline - Collapsed */}
+                        <div>
+                            <button
+                                onClick={() => toggleSection('workflow')}
+                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
+                            >
+                                <span className="text-xs font-medium text-white flex items-center gap-2">
+                                    <Workflow className="text-amber-400" size={14} />
+                                    Workflow Pipeline
+                                </span>
+                                <ChevronRight
+                                    size={16}
+                                    className={`text-neutral-400 transition-transform ${expandedSection === 'workflow' ? 'rotate-90' : ''}`}
+                                />
+                            </button>
+                            <AnimatePresence>
+                                {expandedSection === 'workflow' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="px-3 pb-3">
+                                            <div className="glass rounded-lg p-3 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5 overflow-x-auto">
+                                                {app.id === 1 ? (
+                                                    <LingoCastWorkflow />
+                                                ) : app.id === 2 ? (
+                                                    <ExploresBerlinWorkflow />
+                                                ) : app.id === 3 ? (
+                                                    <ExamCurratorWorkflow />
+                                                ) : (
+                                                    <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
+                                                )}
+                                            </div>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* AI Features - Collapsed */}
+                        <div>
+                            <button
+                                onClick={() => toggleSection('ai')}
+                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
+                            >
+                                <span className="text-xs font-medium text-white flex items-center gap-2">
+                                    <Bot className="text-purple-400" size={14} />
+                                    AI Features
+                                </span>
+                                <ChevronRight
+                                    size={16}
+                                    className={`text-neutral-400 transition-transform ${expandedSection === 'ai' ? 'rotate-90' : ''}`}
+                                />
+                            </button>
+                            <AnimatePresence>
+                                {expandedSection === 'ai' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="px-3 pb-3">
+                                            <ul className="space-y-1.5">
+                                                {app.aiFeatures.map((feature, idx) => (
+                                                    <li key={idx} className="flex items-start gap-1.5 text-xs text-neutral-400">
+                                                        <Sparkles size={12} className="text-purple-400 mt-0.5 shrink-0" />
+                                                        {feature}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+
+                        {/* Python Scripts - Collapsed */}
+                        <div>
+                            <button
+                                onClick={() => toggleSection('python')}
+                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
+                            >
+                                <span className="text-xs font-medium text-white flex items-center gap-2">
+                                    <Terminal className="text-cyan-400" size={14} />
+                                    Python Scripts
+                                </span>
+                                <ChevronRight
+                                    size={16}
+                                    className={`text-neutral-400 transition-transform ${expandedSection === 'python' ? 'rotate-90' : ''}`}
+                                />
+                            </button>
+                            <AnimatePresence>
+                                {expandedSection === 'python' && (
+                                    <motion.div
+                                        initial={{ height: 0, opacity: 0 }}
+                                        animate={{ height: 'auto', opacity: 1 }}
+                                        exit={{ height: 0, opacity: 0 }}
+                                        transition={{ duration: 0.2 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <div className="px-3 pb-3">
+                                            <ul className="space-y-1.5">
+                                                {app.pythonScripts.map((script, idx) => (
+                                                    <li key={idx} className="flex items-start gap-1.5 text-xs text-neutral-400">
+                                                        <Code2 size={12} className="text-cyan-400 mt-0.5 shrink-0" />
+                                                        {script}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+                        </div>
+                    </div>
+                </div>
+
+                {/* DESKTOP LAYOUT (>= lg) - Split view */}
+                <div className="hidden lg:grid lg:grid-cols-2 min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px]">
                     {/* LEFT SIDE - Web App Preview */}
                     <div className="relative">
                         {/* Screenshot */}
@@ -223,29 +457,29 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         />
                         <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-40 mix-blend-overlay`} />
                         <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/60 to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-neutral-900/80 hidden lg:block" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-neutral-900/80" />
 
                         {/* Content */}
-                        <div className="relative h-full flex flex-col justify-end p-4 md:p-6 lg:p-8 xl:p-10">
-                            <h3 className={`text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-1 lg:mb-2`}>
+                        <div className="relative h-full flex flex-col justify-end p-8 xl:p-10">
+                            <h3 className={`text-4xl xl:text-5xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-2`}>
                                 {app.name}
                             </h3>
-                            <p className="text-sm md:text-base lg:text-lg text-neutral-300 font-medium mb-2 lg:mb-4">{app.tagline}</p>
-                            <p className="text-xs md:text-sm lg:text-base text-neutral-400 leading-relaxed mb-4 lg:mb-6 max-w-2xl">{app.description}</p>
+                            <p className="text-lg text-neutral-300 font-medium mb-4">{app.tagline}</p>
+                            <p className="text-base text-neutral-400 leading-relaxed mb-6 max-w-2xl">{app.description}</p>
 
                             <a
                                 href={app.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 px-4 py-2 lg:px-6 lg:py-3 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-sm lg:text-base font-medium hover:shadow-lg hover:scale-105 transition-all w-fit`}
+                                className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-base font-medium hover:shadow-lg hover:scale-105 transition-all w-fit`}
                             >
-                                View Project <ExternalLink size={16} className="lg:w-5 lg:h-5" />
+                                View Project <ExternalLink size={20} />
                             </a>
                         </div>
                     </div>
 
                     {/* RIGHT SIDE - Tech Stack */}
-                    <div className="bg-neutral-900/80 p-3 md:p-4 lg:p-5 space-y-2 lg:space-y-3">
+                    <div className="bg-neutral-900/80 p-5 space-y-3 overflow-y-auto">
                         {/* Tech Stack Header */}
                         <h4 className="text-sm font-bebas text-white flex items-center gap-2 border-b border-white/10 pb-2">
                             <Layers className="text-indigo-400" size={16} />
@@ -253,10 +487,10 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         </h4>
 
                         {/* Tech Categories Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                             {/* Frontend */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm md:text-base text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Globe size={14} /> Frontend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -268,7 +502,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Backend */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm md:text-base text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Server size={14} /> Backend
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -280,7 +514,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Orchestration */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm md:text-base text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Workflow size={14} /> Orchestration
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -292,7 +526,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Deployment */}
                             <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm md:text-base text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Cloud size={14} /> Deployment
                                 </div>
                                 <div className="flex flex-wrap gap-1">
@@ -303,9 +537,9 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                             </div>
                         </div>
 
-                        {/* Workflow Diagram - n8n style visual */}
+                        {/* Workflow Diagram */}
                         <div className="glass rounded-lg p-4 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5 min-h-[140px]">
-                            <div className="text-xs md:text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                            <div className="text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                 <Workflow size={14} /> Workflow Pipeline
                             </div>
                             {app.id === 1 ? (
@@ -320,15 +554,15 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         </div>
 
                         {/* AI & Python Grid */}
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div className="grid grid-cols-2 gap-2">
                             {/* AI Features */}
                             <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                                <div className="text-sm md:text-base text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Bot size={14} /> AI Features
                                 </div>
                                 <ul className="space-y-1">
                                     {app.aiFeatures.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-sm md:text-base text-neutral-400">
+                                        <li key={idx} className="flex items-start gap-1 text-sm text-neutral-400">
                                             <Sparkles size={14} className="text-purple-400 mt-0.5 shrink-0" />
                                             {feature}
                                         </li>
@@ -338,12 +572,12 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
 
                             {/* Python Scripts */}
                             <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-blue-500/5 to-cyan-500/5">
-                                <div className="text-sm md:text-base text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
+                                <div className="text-sm text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
                                     <Terminal size={14} /> Python Scripts
                                 </div>
                                 <ul className="space-y-1">
                                     {app.pythonScripts.map((script, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-sm md:text-base text-neutral-400">
+                                        <li key={idx} className="flex items-start gap-1 text-sm text-neutral-400">
                                             <Code2 size={14} className="text-cyan-400 mt-0.5 shrink-0" />
                                             {script}
                                         </li>
