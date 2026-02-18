@@ -12,12 +12,14 @@ function ProcessingNode({
     x,
     y,
     color,
-    delay
+    delay,
+    coreColor
 }: {
     x: number;
     y: number;
     color: string;
     delay: number;
+    coreColor: string;
 }) {
     return (
         <g>
@@ -75,7 +77,7 @@ function ProcessingNode({
                 cx={x}
                 cy={y}
                 r={1.5}
-                fill="white"
+                fill={coreColor}
                 animate={{
                     opacity: [0.8, 1, 0.8],
                 }}
@@ -95,12 +97,14 @@ function TravelingLight({
     path,
     color,
     delay,
-    duration
+    duration,
+    coreColor
 }: {
     path: string;
     color: string;
     delay: number;
     duration: number;
+    coreColor: string;
 }) {
     const [pathLength, setPathLength] = useState(0);
     const pathRef = React.useRef<SVGPathElement>(null);
@@ -171,7 +175,7 @@ function TravelingLight({
             <motion.path
                 d={path}
                 fill="none"
-                stroke="white"
+                stroke={coreColor}
                 strokeWidth={1}
                 strokeOpacity={0.9}
                 strokeLinecap="round"
@@ -210,6 +214,7 @@ function createOrbitPath(centerX: number, centerY: number, radius: number, loops
 }
 
 export default function AnimatedWires({ className = "" }: AnimatedWiresProps) {
+    const coreColor = "#171717";
     const orbitRadius = 12;
 
     // n8n workflow style paths with orbit loops at node positions
@@ -277,6 +282,7 @@ export default function AnimatedWires({ className = "" }: AnimatedWiresProps) {
                         color={workflow.color}
                         delay={workflow.delay}
                         duration={workflow.duration}
+                        coreColor={coreColor}
                     />
                 ))}
 
@@ -288,6 +294,7 @@ export default function AnimatedWires({ className = "" }: AnimatedWiresProps) {
                         y={workflow.nodePosition.y}
                         color={workflow.color}
                         delay={workflow.delay + 0.5}
+                        coreColor={coreColor}
                     />
                 ))}
             </svg>

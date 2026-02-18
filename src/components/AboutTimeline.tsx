@@ -76,7 +76,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
     }, []);
 
     return (
-        <section id="about" ref={containerRef} className="relative h-[300vh] bg-neutral-950 snap-start">
+        <section id="about" ref={containerRef} className="relative h-[300vh] bg-white snap-start">
             {/* Sticky Container for Visuals */}
             <div className="sticky top-0 h-screen w-full overflow-hidden">
 
@@ -84,13 +84,13 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                 <div className="lg:hidden h-full flex flex-col px-4 py-6">
                     {/* Mobile Header */}
                     <div className="text-center mb-4">
-                        <span className="text-xs font-mono text-pink-400 uppercase tracking-widest">Experience</span>
-                        <h2 className="text-2xl font-bebas text-white mt-1">My Journey</h2>
+                        <span className="text-xs font-mono text-pink-600 uppercase tracking-widest">Experience</span>
+                        <h2 className="text-2xl font-bebas text-neutral-900 mt-1">My Journey</h2>
                     </div>
 
                     {/* Horizontal Timeline Progress */}
                     <div className="relative h-2 mx-4 mb-6">
-                        <div className="absolute inset-0 bg-white/10 rounded-full" />
+                        <div className="absolute inset-0 bg-black/5 rounded-full" />
                         <motion.div
                             style={{ width: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
                             className="absolute inset-y-0 left-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full"
@@ -101,8 +101,8 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                 <div
                                     key={index}
                                     className={`w-3 h-3 rounded-full transition-all duration-300 ${index <= activeIndex
-                                            ? "bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
-                                            : "bg-white/30"
+                                        ? "bg-white shadow-[0_0_10px_rgba(0,0,0,0.2)] border border-neutral-200"
+                                        : "bg-black/10"
                                         }`}
                                 />
                             ))}
@@ -122,17 +122,17 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                     }}
                                     transition={{ duration: 0.3 }}
                                     className={`glass rounded-xl border transition-all duration-300 ${isActive
-                                            ? "border-indigo-500/50 bg-white/5 p-4"
-                                            : "border-white/5 bg-white/[0.02] p-3"
+                                        ? "border-indigo-500/50 bg-white p-4 shadow-lg"
+                                        : "border-black/5 bg-white/50 p-3"
                                         }`}
                                 >
                                     <div className="flex items-start justify-between gap-3">
                                         <div className="flex-1 min-w-0">
-                                            <h3 className={`font-bebas text-white transition-all ${isActive ? "text-xl" : "text-lg text-white/70"
+                                            <h3 className={`font-bebas text-neutral-900 transition-all ${isActive ? "text-xl" : "text-lg text-neutral-500"
                                                 }`}>
                                                 {exp.role}
                                             </h3>
-                                            <div className="flex items-center gap-2 text-xs font-mono text-indigo-400">
+                                            <div className="flex items-center gap-2 text-xs font-mono text-indigo-600">
                                                 <Briefcase size={12} />
                                                 <span className="truncate">{exp.company}</span>
                                             </div>
@@ -148,7 +148,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                             animate={{ opacity: 1, height: "auto" }}
                                             className="mt-3 overflow-hidden"
                                         >
-                                            <p className="text-xs text-neutral-400 leading-relaxed border-l-2 border-indigo-500 pl-2">
+                                            <p className="text-xs text-neutral-600 leading-relaxed border-l-2 border-indigo-500 pl-2">
                                                 {exp.summary}
                                             </p>
                                             <div className="flex gap-3 mt-2 text-[10px] text-neutral-500 font-mono">
@@ -185,7 +185,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-50 pointer-events-auto flex items-end">
                             {/* Rotate Slider (Centered) */}
                             <div className="flex flex-col items-center gap-2">
-                                <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Rotate</span>
+                                <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-mono">Rotate</span>
                                 <input
                                     type="range"
                                     min="0"
@@ -193,14 +193,14 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                     step="0.001"
                                     value={manualRotation}
                                     onChange={(e) => setManualRotation(parseFloat(e.target.value))}
-                                    className="w-60 h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
+                                    className="w-60 h-1 bg-black/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-black/20 transition-colors [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-indigo-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
                                 />
                             </div>
                         </div>
 
                         {/* Tilt Slider (Independent - Moved Right) */}
                         <div className="absolute bottom-8 left-[80%] -translate-x-1/2 z-50 pointer-events-auto flex flex-col items-center gap-1 mb-2">
-                            <span className="text-[10px] uppercase tracking-widest text-white/40 font-mono">Tilt</span>
+                            <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-mono">Tilt</span>
                             <div className="relative w-4 h-24 flex items-center justify-center">
                                 <input
                                     type="range"
@@ -209,7 +209,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                     step="0.001"
                                     value={manualTilt}
                                     onChange={(e) => setManualTilt(parseFloat(e.target.value))}
-                                    className="absolute w-24 h-1 bg-white/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-white/20 transition-colors -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-pink-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
+                                    className="absolute w-24 h-1 bg-black/10 rounded-full appearance-none cursor-pointer outline-none hover:bg-black/20 transition-colors -rotate-90 origin-center [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:bg-pink-500 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:hover:scale-125 [&::-webkit-slider-thumb]:transition-transform"
                                 />
                             </div>
                         </div>
@@ -222,7 +222,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                         <div className="relative z-10 w-12 h-[75%] flex flex-col items-center justify-center pointer-events-none">
                             <div
                                 ref={lineRef}
-                                className="relative h-full w-px bg-white/10 cursor-pointer pointer-events-auto group"
+                                className="relative h-full w-px bg-black/10 cursor-pointer pointer-events-auto group"
                                 onPointerDown={(e) => {
                                     isScrubbing.current = true;
                                     if (parentRef?.current) parentRef.current.style.scrollBehavior = "auto";
@@ -241,15 +241,15 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
                                 {/* Knob */}
                                 <motion.div
                                     style={{ top: useTransform(smoothProgress, [0, 1], ["0%", "100%"]) }}
-                                    className="absolute -left-1.5 w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+                                    className="absolute -left-1.5 w-4 h-4 rounded-full bg-white shadow-[0_0_15px_rgba(0,0,0,0.2)] border border-neutral-200"
                                 />
 
                                 {/* Labels */}
                                 <div className="absolute left-6 top-0 -translate-y-1/2 text-left pointer-events-none">
-                                    <h3 className="text-sm font-bold text-white/50 tracking-widest">PRESENT</h3>
+                                    <h3 className="text-sm font-bold text-neutral-400 tracking-widest">PRESENT</h3>
                                 </div>
                                 <div className="absolute left-6 bottom-0 translate-y-1/2 text-left pointer-events-none">
-                                    <h3 className="text-sm font-bold text-white/50 tracking-widest">PAST</h3>
+                                    <h3 className="text-sm font-bold text-neutral-400 tracking-widest">PAST</h3>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +278,7 @@ export default function AboutTimeline({ parentRef }: { parentRef: React.RefObjec
             </div>
 
             {/* Bottom Fade */}
-            <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-neutral-950 to-transparent pointer-events-none" />
+            <div className="absolute bottom-0 w-full h-32 bg-gradient-to-t from-white to-transparent pointer-events-none" />
         </section>
     );
 }
@@ -305,22 +305,22 @@ function ExperienceCard({ experience, isActive, style }: { experience: Experienc
             className="absolute left-0 w-full max-w-xl -translate-y-1/2 origin-left pointer-events-none"
         >
             <div className={`
-                glass rounded-xl border border-white/10 transition-all duration-300
-                ${isActive ? "p-6 md:p-8 bg-white/5 backdrop-blur-md shadow-2xl" : "p-3 bg-white/5 border-transparent"}
+                glass rounded-xl border border-black/5 transition-all duration-300
+                ${isActive ? "p-6 md:p-8 bg-white/80 backdrop-blur-md shadow-2xl" : "p-3 bg-white/30 border-transparent"}
             `}>
                 <div className="flex items-center justify-between">
                     <div>
-                        <h3 className={`font-bebas text-white transition-all ${isActive ? "text-3xl mb-1" : "text-xl text-white/70"}`}>
+                        <h3 className={`font-bebas text-neutral-900 transition-all ${isActive ? "text-3xl mb-1" : "text-xl text-neutral-500"}`}>
                             {experience.role}
                         </h3>
                         {isActive && (
-                            <div className="flex items-center gap-2 text-indigo-400 font-mono text-sm">
+                            <div className="flex items-center gap-2 text-indigo-600 font-mono text-sm">
                                 <Briefcase size={14} />
                                 <span>{experience.company}</span>
                             </div>
                         )}
                         {!isActive && (
-                            <span className="text-white/50 text-xs font-mono">{experience.company}</span>
+                            <span className="text-neutral-500 text-xs font-mono">{experience.company}</span>
                         )}
                     </div>
 
@@ -337,7 +337,7 @@ function ExperienceCard({ experience, isActive, style }: { experience: Experienc
                         animate={{ opacity: 1, height: "auto" }}
                         className="mt-4 overflow-hidden"
                     >
-                        <p className="text-neutral-300 text-sm leading-relaxed border-l-2 border-indigo-500 pl-3">
+                        <p className="text-neutral-600 text-sm leading-relaxed border-l-2 border-indigo-500 pl-3">
                             {experience.summary}
                         </p>
                         <div className="flex gap-4 mt-3 text-xs text-neutral-500 font-mono">

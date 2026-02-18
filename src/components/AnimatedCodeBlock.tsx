@@ -5,126 +5,91 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Terminal, Play, Pause, RotateCcw, Copy, Check, Sparkles } from "lucide-react";
 
 // The automation.ts code to be typed out
-const automationCode = `// automation.ts - AI Workflow Orchestration
-import { Agent, Pipeline, Trigger } from "@ai/orchestrator";
-import { GeminiClient } from "@google/genai";
-import { SupabaseClient } from "@supabase/supabase-js";
+const automationCode = `// agentic_system.ts - Autonomous Organizational Brain
+import { ChatOpenAI } from "@langchain/openai";
+import { initializeAgentExecutorWithOptions } from "langchain/agents";
+import { SupabaseVectorStore } from "@langchain/community/vectorstores/supabase";
+import { OpenAIEmbeddings } from "@langchain/openai";
+import { DynamicTool } from "@langchain/core/tools";
+import { Calculator } from "langchain/tools/calculator";
 
-interface WorkflowConfig {
-  name: string;
-  triggers: Trigger[];
-  agents: Agent[];
-  onComplete: (result: PipelineResult) => void;
-}
-
-// Initialize AI clients
-const gemini = new GeminiClient({
-  apiKey: process.env.GEMINI_API_KEY,
-  model: "gemini-2.5-flash",
-});
-
-const supabase = new SupabaseClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_KEY!
+// 1. Initialize the Organizational Memory (Vector Store)
+const embeddings = new OpenAIEmbeddings();
+const vectorStore = await SupabaseVectorStore.fromExistingIndex(
+  embeddings,
+  {
+    client: supabaseClient,
+    tableName: "documents",
+    queryName: "match_documents",
+  }
 );
 
-// Define the orchestration pipeline
-export const createWorkflow = (config: WorkflowConfig) => {
-  const pipeline = new Pipeline({
-    name: config.name,
-    retryPolicy: { maxRetries: 3, backoff: "exponential" },
+// 2. Define Custom Tools (The "Hands" of the Agent)
+const revenueTool = new DynamicTool({
+  name: "RevenueAnalyzer",
+  description: "Fetches live Q3 revenue data from Data Warehouse",
+  func: async () => {
+    // Webhook to n8n / internal API
+    const data = await fetchInternalAPI("/revenue/q3-2025");
+    return JSON.stringify(data);
+  },
+});
+
+const reportGeneratorTool = new DynamicTool({
+  name: "ReportGenerator",
+  description: "Generates and uploads PDF reports to Management Dashboard",
+  func: async (input: string) => {
+    const reportId = await generatePDF(input);
+    return \`Report generated: \${reportId}\`;
+  },
+});
+
+// 3. Initialize the Reasoning Engine (The "Brain")
+const model = new ChatOpenAI({
+  modelName: "gpt-4-turbo",
+  temperature: 0, // Deterministic for logic
+});
+
+// 4. Create the Autonomous Agent
+const executor = await initializeAgentExecutorWithOptions(
+  [revenueTool, reportGeneratorTool, new Calculator()],
+  model,
+  {
+    agentType: "openai-functions",
+    verbose: true,
+  }
+);
+
+console.log("🤖 Agent initialized. Waiting for triggers...");
+
+// 5. Execute Mission
+export const runAgenticWorkflow = async (goal: string) => {
+  console.log(\`🎯 New Goal: \${goal}\`);
+  
+  // The agent decides which tools to use and in what order
+  const result = await executor.call({
+    input: \`Context: \${goal}. 
+           Check our internal docs in Vector DB for formatting SOPs, 
+           analyze the revenue, and generate a final report.\`
   });
 
-  // Step 1: Data Ingestion Agent
-  pipeline.addAgent({
-    name: "DataIngestion",
-    description: "Fetches and validates input data",
-    execute: async (input) => {
-      const { data, error } = await supabase
-        .from("events")
-        .select("*")
-        .order("created_at", { ascending: false });
-      
-      if (error) throw new Error(\`Ingestion failed: \${error.message}\`);
-      return { events: data, count: data.length };
-    },
-  });
-
-  // Step 2: AI Processing Agent
-  pipeline.addAgent({
-    name: "AIProcessor",
-    description: "Processes data with Gemini LLM",
-    execute: async (input) => {
-      const response = await gemini.generateContent({
-        prompt: \`Analyze and categorize: \${JSON.stringify(input.events)}\`,
-        temperature: 0.7,
-        maxTokens: 2048,
-      });
-      
-      return {
-        analysis: response.text,
-        categories: response.structured?.categories ?? [],
-      };
-    },
-  });
-
-  // Step 3: Transform & Store Agent
-  pipeline.addAgent({
-    name: "TransformStore",
-    description: "Transforms results and persists to database",
-    execute: async (input) => {
-      const enrichedData = input.categories.map((cat: any) => ({
-        ...cat,
-        processedAt: new Date().toISOString(),
-        source: "ai-orchestrator",
-      }));
-
-      await supabase.from("processed_events").insert(enrichedData);
-      
-      return { stored: enrichedData.length, status: "success" };
-    },
-  });
-
-  // Configure triggers
-  config.triggers.forEach((trigger) => pipeline.addTrigger(trigger));
-
-  // Set completion handler
-  pipeline.onComplete(config.onComplete);
-
-  return pipeline;
-};
-
-// Execute the workflow
-export const runAutomation = async () => {
-  const workflow = createWorkflow({
-    name: "EventProcessor",
-    triggers: [
-      { type: "schedule", cron: "0 */6 * * *" },
-      { type: "webhook", path: "/api/trigger" },
-    ],
-    agents: [],
-    onComplete: (result) => {
-      console.log("✨ Workflow completed:", result);
-    },
-  });
-
-  await workflow.start();
-  console.log("🚀 Automation pipeline is now running...");
+  console.log("✅ Mission Complete:", result.output);
+  return result;
 };`;
 
 // Syntax highlighting colors
 const syntaxColors: Record<string, string> = {
-    keyword: "text-purple-400",
-    string: "text-emerald-400",
+    keyword: "text-purple-600",
+    string: "text-emerald-600",
     comment: "text-neutral-500",
-    function: "text-yellow-400",
-    type: "text-cyan-400",
-    variable: "text-blue-400",
-    operator: "text-pink-400",
-    number: "text-orange-400",
-    property: "text-sky-300",
-    bracket: "text-neutral-300",
-    punctuation: "text-neutral-400",
+    function: "text-yellow-600",
+    type: "text-cyan-600",
+    variable: "text-blue-600",
+    operator: "text-pink-600",
+    number: "text-orange-600",
+    property: "text-sky-600",
+    bracket: "text-neutral-600",
+    punctuation: "text-neutral-600",
 };
 
 // Simple syntax highlighter
@@ -273,7 +238,7 @@ function highlightSyntax(code: string): React.ReactNode[] {
 
             // Default: take one character
             parts.push(
-                <span key={`${lineIndex}-${charIndex}`} className="text-neutral-100">
+                <span key={`${lineIndex}-${charIndex}`} className="text-neutral-800">
                     {remaining[0]}
                 </span>
             );
@@ -400,10 +365,10 @@ export default function AnimatedCodeBlock({
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="glass rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-purple-500/10"
+                className="glass rounded-2xl overflow-hidden border border-black/5 shadow-2xl shadow-neutral-500/10"
             >
                 {/* Terminal Header */}
-                <div className="bg-neutral-900/90 px-4 py-3 flex items-center justify-between border-b border-white/10">
+                <div className="bg-neutral-100 px-4 py-3 flex items-center justify-between border-b border-neutral-200 transition-colors duration-300">
                     <div className="flex items-center gap-3">
                         {/* Traffic lights */}
                         <div className="flex gap-2">
@@ -413,14 +378,14 @@ export default function AnimatedCodeBlock({
                         </div>
 
                         {/* File name */}
-                        <div className="flex items-center gap-2 text-neutral-400">
+                        <div className="flex items-center gap-2 text-neutral-600">
                             <Terminal size={14} />
-                            <span className="text-sm font-mono">automation.ts</span>
+                            <span className="text-sm font-mono">agentic_system.ts</span>
                             {isPlaying && (
                                 <motion.span
                                     initial={{ opacity: 0, scale: 0.8 }}
                                     animate={{ opacity: 1, scale: 1 }}
-                                    className="flex items-center gap-1 text-xs text-emerald-400"
+                                    className="flex items-center gap-1 text-xs text-indigo-600"
                                 >
                                     <Sparkles size={12} className="animate-pulse" />
                                     Writing...
@@ -434,33 +399,33 @@ export default function AnimatedCodeBlock({
                         <div className="flex items-center gap-2">
                             <button
                                 onClick={handlePlayPause}
-                                className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                                className="p-1.5 hover:bg-black/5 rounded-lg transition-colors"
                                 title={isPlaying ? "Pause" : isComplete ? "Replay" : "Play"}
                             >
                                 {isPlaying ? (
-                                    <Pause size={16} className="text-neutral-400" />
+                                    <Pause size={16} className="text-neutral-600" />
                                 ) : isComplete ? (
-                                    <RotateCcw size={16} className="text-neutral-400" />
+                                    <RotateCcw size={16} className="text-neutral-600" />
                                 ) : (
-                                    <Play size={16} className="text-neutral-400" />
+                                    <Play size={16} className="text-neutral-600" />
                                 )}
                             </button>
                             <button
                                 onClick={handleReset}
-                                className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                                className="p-1.5 hover:bg-black/5 rounded-lg transition-colors"
                                 title="Reset"
                             >
-                                <RotateCcw size={16} className="text-neutral-400" />
+                                <RotateCcw size={16} className="text-neutral-600" />
                             </button>
                             <button
                                 onClick={handleCopy}
-                                className="p-1.5 hover:bg-white/10 rounded-lg transition-colors"
+                                className="p-1.5 hover:bg-black/5 rounded-lg transition-colors"
                                 title="Copy code"
                             >
                                 {copied ? (
-                                    <Check size={16} className="text-emerald-400" />
+                                    <Check size={16} className="text-emerald-500" />
                                 ) : (
-                                    <Copy size={16} className="text-neutral-400" />
+                                    <Copy size={16} className="text-neutral-600" />
                                 )}
                             </button>
                         </div>
@@ -468,7 +433,7 @@ export default function AnimatedCodeBlock({
                 </div>
 
                 {/* Progress bar */}
-                <div className="h-0.5 bg-neutral-800 relative overflow-hidden">
+                <div className="h-0.5 bg-neutral-200 relative overflow-hidden transition-colors duration-300">
                     <motion.div
                         className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-cyan-500"
                         initial={{ width: 0 }}
@@ -488,12 +453,12 @@ export default function AnimatedCodeBlock({
                 {/* Code Area */}
                 <div
                     ref={codeContainerRef}
-                    className="bg-[#0d0d0f] p-4 overflow-auto font-mono text-sm leading-6"
+                    className="bg-white p-4 overflow-auto font-mono text-sm leading-6 transition-colors duration-300"
                     style={{ height: "500px", maxHeight: "60vh" }}
                 >
                     <div className="flex">
                         {/* Line numbers */}
-                        <div className="pr-4 text-right text-neutral-600 select-none border-r border-white/5 mr-4">
+                        <div className="pr-4 text-right text-neutral-400 select-none border-r border-neutral-100 mr-4 transition-colors duration-300">
                             {lineNumbers.map((num) => (
                                 <div key={num} className="leading-relaxed">
                                     {num}
@@ -508,7 +473,7 @@ export default function AnimatedCodeBlock({
                             {/* Blinking cursor */}
                             {!isComplete && (
                                 <motion.span
-                                    className="inline-block w-2 h-5 bg-cyan-400 ml-0.5"
+                                    className="inline-block w-2 h-5 bg-indigo-500 ml-0.5"
                                     animate={{ opacity: [1, 1, 0, 0] }}
                                     transition={{ duration: 1, repeat: Infinity, times: [0, 0.5, 0.5, 1] }}
                                 />
@@ -518,7 +483,7 @@ export default function AnimatedCodeBlock({
                 </div>
 
                 {/* Status Bar */}
-                <div className="bg-neutral-900/80 px-4 py-2 flex items-center justify-between text-xs text-neutral-500 border-t border-white/5">
+                <div className="bg-neutral-100 px-4 py-2 flex items-center justify-between text-xs text-neutral-500 border-t border-neutral-200 transition-colors duration-300">
                     <div className="flex items-center gap-4">
                         <span>TypeScript</span>
                         <span>UTF-8</span>

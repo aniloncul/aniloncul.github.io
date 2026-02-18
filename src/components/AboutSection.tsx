@@ -25,15 +25,15 @@ export default function AboutSection() {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <span className="text-sm md:text-base lg:text-lg font-mono text-pink-400 uppercase tracking-widest mb-4 lg:mb-6 block">
+                        <span className="text-sm md:text-base lg:text-lg font-mono text-pink-600 uppercase tracking-widest mb-4 lg:mb-6 block">
                             About Me
                         </span>
-                        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bebas text-white mb-4 lg:mb-6 xl:mb-8">
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl 2xl:text-8xl font-bebas text-neutral-900 mb-4 lg:mb-6 xl:mb-8">
                             Turning Ideas Into
                             <span className="text-gradient"> Reality</span>
                         </h2>
 
-                        <div className="space-y-4 lg:space-y-6 text-neutral-300 font-mono text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed max-w-2xl">
+                        <div className="space-y-4 lg:space-y-6 text-neutral-600 font-mono text-sm md:text-base lg:text-lg xl:text-xl leading-relaxed max-w-2xl">
                             <p>
                                 I&apos;m a software engineer passionate about creating digital products
                                 that make a difference. With expertise spanning mobile, web, and AI,
@@ -88,9 +88,9 @@ export default function AboutSection() {
                             >
                                 <skill.icon
                                     size={28}
-                                    className="text-indigo-400 mb-2 lg:mb-3 xl:mb-4 group-hover:text-pink-400 transition-colors lg:w-8 lg:h-8 xl:w-10 xl:h-10"
+                                    className="text-indigo-600 mb-2 lg:mb-3 xl:mb-4 group-hover:text-pink-600 transition-colors lg:w-8 lg:h-8 xl:w-10 xl:h-10"
                                 />
-                                <h3 className="font-bebas text-white text-lg md:text-xl lg:text-2xl xl:text-3xl mb-1 lg:mb-2">{skill.label}</h3>
+                                <h3 className="font-bebas text-neutral-900 text-lg md:text-xl lg:text-2xl xl:text-3xl mb-1 lg:mb-2">{skill.label}</h3>
                                 <p className="text-xs md:text-sm lg:text-base text-neutral-500">{skill.desc}</p>
                             </motion.div>
                         ))}

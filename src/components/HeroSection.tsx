@@ -2,7 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown, Sparkles } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import AnimatedCodeBlock from "./AnimatedCodeBlock";
 import AnimatedWires from "./AnimatedWires";
 
@@ -49,17 +49,6 @@ export default function HeroSection() {
                 <motion.div style={{ y, opacity }} className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 2xl:gap-24 items-center">
                     {/* Left: Text Content - Left Aligned */}
                     <div className="text-left">
-                        {/* Badge */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
-                            className="inline-flex items-center gap-2 px-4 py-2 lg:px-5 lg:py-2.5 mb-6 lg:mb-8 xl:mb-10 rounded-full glass text-sm lg:text-base text-neutral-300"
-                        >
-                            <Sparkles size={14} className="text-indigo-400 lg:w-4 lg:h-4" />
-                            Available for new projects
-                        </motion.div>
-
                         {/* Main Title */}
                         <motion.h1
                             initial={{ opacity: 0, y: 40 }}
@@ -67,9 +56,9 @@ export default function HeroSection() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bebas tracking-tight mb-4 lg:mb-6 xl:mb-8"
                         >
-                            <span className="text-white">I BUILD</span>
+                            <span className="text-neutral-900">I ARCHITECT</span>
                             <br />
-                            <span className="text-gradient">DIGITAL SYSTEMS</span>
+                            <span className="text-gradient">AI OPERATING SYSTEMS</span>
                         </motion.h1>
 
                         {/* Subtitle */}
@@ -77,9 +66,9 @@ export default function HeroSection() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
-                            className="text-base md:text-lg lg:text-xl xl:text-2xl text-neutral-400 max-w-2xl mb-8 lg:mb-10 xl:mb-12 font-mono leading-relaxed"
+                            className="text-base md:text-lg lg:text-xl xl:text-2xl text-neutral-600 max-w-2xl mb-8 lg:mb-10 xl:mb-12 font-mono leading-relaxed"
                         >
-                            Full Stack Product Engineering with a Data Background & Automation Systems, orchestrating  the AI workflows that actually create value.
+                            Building the brain of your organization. I design agentic backends, orchestrate intelligent workflows, and engineer the system architecture that drives autonomy.
                         </motion.p>
 
                         {/* CTA Buttons */}
@@ -91,13 +80,13 @@ export default function HeroSection() {
                         >
                             <a
                                 href="#apps"
-                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-full text-white text-base lg:text-lg xl:text-xl font-bold hover:scale-105 transition-transform shadow-lg shadow-indigo-500/25 text-center"
+                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-2xl text-white text-base lg:text-lg xl:text-xl font-bold hover:scale-105 transition-transform shadow-lg shadow-indigo-500/25 text-center"
                             >
                                 View My Apps
                             </a>
                             <a
                                 href="#contact"
-                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 glass rounded-full text-white text-base lg:text-lg xl:text-xl font-bold hover:bg-white/10 transition-colors text-center"
+                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 glass rounded-2xl text-neutral-900 text-base lg:text-lg xl:text-xl font-bold hover:bg-black/5 transition-colors text-center border border-black/5"
                             >
                                 Get in Touch
                             </a>

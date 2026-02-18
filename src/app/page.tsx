@@ -83,7 +83,7 @@ export default function Home() {
   return (
     <main
       ref={containerRef}
-      className="fullpage-container bg-[#050505] text-white"
+      className="fullpage-container"
     >
       <Navbar />
 

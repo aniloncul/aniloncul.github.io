@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, JetBrains_Mono } from "next/font/google"; // Cinema & Engineering fonts
+import { Bebas_Neue, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -24,9 +24,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
-        className={`${bebasNeue.variable} ${jetbrainsMono.variable} antialiased bg-neutral-950 text-neutral-100 overflow-x-hidden`}
+        className={`${bebasNeue.variable} ${jetbrainsMono.variable} antialiased overflow-x-hidden`}
       >
         {children}
       </body>

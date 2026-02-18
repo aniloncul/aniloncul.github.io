@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Send } from "lucide-react";
 
 export default function ContactSection() {
-    // ⬇️ FOR GITHUB PAGES: Use your Public n8n URL (starts with https://...)
-    // If testing locally, http://localhost:5678 is fine.
     const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.dev/webhook/contact-form";
 
     const [email, setEmail] = useState("");
@@ -19,7 +17,6 @@ export default function ContactSection() {
         setStatus("sending");
 
         try {
-            // Direct fetch to n8n (Client-Side)
             const res = await fetch(N8N_WEBHOOK_URL, {
                 method: "POST",
                 headers: {
@@ -36,7 +33,6 @@ export default function ContactSection() {
             setSubject("");
             setMessage("");
 
-            // Reset status after 3 seconds
             setTimeout(() => setStatus("idle"), 3000);
         } catch (error) {
             console.error("Failed to send:", error);
@@ -54,8 +50,8 @@ export default function ContactSection() {
                     className="flex flex-col gap-6"
                 >
                     <div className="text-center mb-4">
-                        <h2 className="text-3xl font-bold text-white mb-2">Get in Touch</h2>
-                        <p className="text-neutral-400">Send a message directly to my Telegram!</p>
+                        <h2 className="text-3xl font-bold text-neutral-900 mb-2">Get in Touch</h2>
+                        <p className="text-neutral-600">Send a message directly to my Telegram!</p>
                     </div>
 
                     <form onSubmit={handleSend} className="flex flex-col gap-4">
@@ -65,7 +61,7 @@ export default function ContactSection() {
                                 placeholder="Your Email *"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                                className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
                                 required
                             />
                         </div>
@@ -75,7 +71,7 @@ export default function ContactSection() {
                                 placeholder="Subject *"
                                 value={subject}
                                 onChange={(e) => setSubject(e.target.value)}
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors"
+                                className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500 transition-colors shadow-sm"
                                 required
                             />
                         </div>
@@ -85,7 +81,7 @@ export default function ContactSection() {
                                 value={message}
                                 onChange={(e) => setMessage(e.target.value)}
                                 rows={4}
-                                className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-white placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500 transition-colors resize-none"
+                                className="w-full bg-white border border-black/10 rounded-lg px-4 py-3 text-neutral-900 placeholder:text-neutral-400 focus:outline-none focus:border-indigo-500 transition-colors resize-none shadow-sm"
                                 required
                             />
                         </div>
@@ -93,9 +89,9 @@ export default function ContactSection() {
                         <button
                             type="submit"
                             disabled={status === "sending" || status === "success"}
-                            className={`w-full font-bold rounded-lg py-3 flex items-center justify-center gap-2 transition-all ${status === "success"
+                            className={`w-full font-bold rounded-lg py-3 flex items-center justify-center gap-2 transition-all shadow-md ${status === "success"
                                 ? "bg-green-500 text-white"
-                                : "bg-white text-black hover:bg-neutral-200"
+                                : "bg-neutral-900 text-white hover:bg-neutral-800"
                                 }`}
                         >
                             {status === "sending" ? (
@@ -120,7 +116,7 @@ export default function ContactSection() {
                             href="https://github.com/aniloncul"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-neutral-400 hover:text-white transition-colors"
+                            className="text-neutral-400 hover:text-neutral-900 transition-colors"
                         >
                             <Github size={24} />
                         </a>
@@ -137,7 +133,7 @@ export default function ContactSection() {
             </div>
 
             {/* Simple Footer */}
-            <div className="absolute bottom-4 left-0 w-full text-center text-neutral-600 text-sm">
+            <div className="absolute bottom-4 left-0 w-full text-center text-neutral-500 text-sm">
                 <p>© 2025 Anil Oncul. All rights reserved.</p>
             </div>
         </section >

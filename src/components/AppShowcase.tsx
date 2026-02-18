@@ -170,9 +170,9 @@ const webApps = [
 
 function TechBadge({ tech }: { tech: string }) {
     return (
-        <div className="flex items-center gap-1 px-2 py-0.5 bg-white/5 rounded border border-white/10 hover:bg-white/10 transition-all">
-            <span className="text-indigo-400">{techIcons[tech] || <Code2 size={12} />}</span>
-            <span className="text-xs md:text-sm text-neutral-300">{tech}</span>
+        <div className="flex items-center gap-1 px-2 py-0.5 bg-black/5 rounded border border-black/5 hover:bg-black/10 transition-all">
+            <span className="text-indigo-600">{techIcons[tech] || <Code2 size={12} />}</span>
+            <span className="text-xs md:text-sm text-neutral-600">{tech}</span>
         </div>
     );
 }
@@ -191,16 +191,16 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
             transition={{ duration: 0.4, ease: "easeOut" }}
             className={`relative w-full mx-auto ${isActive ? "z-10" : "z-0"}`}
         >
-            <div className="glass rounded-xl md:rounded-2xl overflow-hidden border border-white/10 hover:border-white/20 transition-colors">
+            <div className="glass rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-black/10 transition-colors">
                 {/* Browser Chrome */}
-                <div className="bg-neutral-800/80 px-2 py-1.5 md:px-3 md:py-2 flex items-center gap-2 border-b border-white/10">
+                <div className="bg-neutral-100/80 px-2 py-1.5 md:px-3 md:py-2 flex items-center gap-2 border-b border-black/5">
                     <div className="flex gap-1 md:gap-1.5">
                         <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500" />
                         <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500" />
                         <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500" />
                     </div>
                     <div className="flex-1 mx-1 md:mx-3">
-                        <div className="bg-neutral-700/50 rounded px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] text-neutral-400 font-mono flex items-center gap-1 md:gap-1.5 truncate">
+                        <div className="bg-neutral-200/50 rounded px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] text-neutral-500 font-mono flex items-center gap-1 md:gap-1.5 truncate">
                             <Globe size={8} className="md:w-[10px] md:h-[10px] shrink-0" />
                             <span className="truncate">{`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
                         </div>
@@ -223,18 +223,18 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     {/* Screenshot Section - Compact for mobile */}
                     <div className="relative h-[200px] sm:h-[250px]">
                         <div
-                            className="absolute inset-0 bg-cover bg-center bg-neutral-900"
+                            className="absolute inset-0 bg-cover bg-center bg-neutral-100"
                             style={{ backgroundImage: `url(${app.screenshot})` }}
                         />
-                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-30 mix-blend-overlay`} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/80 to-transparent" />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-20 mix-blend-overlay`} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent" />
 
                         {/* Content overlay */}
                         <div className="absolute inset-0 flex flex-col justify-end p-4">
                             <h3 className={`text-2xl sm:text-3xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
                                 {app.name}
                             </h3>
-                            <p className="text-xs sm:text-sm text-neutral-300 font-medium mb-2">{app.tagline}</p>
+                            <p className="text-xs sm:text-sm text-neutral-600 font-medium mb-2">{app.tagline}</p>
                             <a
                                 href={app.link}
                                 target="_blank"
@@ -247,20 +247,20 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     </div>
 
                     {/* Description - Mobile */}
-                    <div className="p-3 bg-neutral-900/90 border-t border-white/5">
-                        <p className="text-xs text-neutral-400 leading-relaxed line-clamp-3">{app.description}</p>
+                    <div className="p-3 bg-white/90 border-t border-black/5">
+                        <p className="text-xs text-neutral-500 leading-relaxed line-clamp-3">{app.description}</p>
                     </div>
 
                     {/* Collapsible Tech Sections - Mobile */}
-                    <div className="bg-neutral-900/80 divide-y divide-white/5">
+                    <div className="bg-white/80 divide-y divide-black/5">
                         {/* Tech Stack - Collapsed by default */}
                         <div>
                             <button
                                 onClick={() => toggleSection('tech')}
                                 className="w-full px-3 py-2.5 flex items-center justify-between text-left"
                             >
-                                <span className="text-xs font-medium text-white flex items-center gap-2">
-                                    <Layers className="text-indigo-400" size={14} />
+                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
+                                    <Layers className="text-indigo-600" size={14} />
                                     Tech Stack
                                 </span>
                                 <ChevronRight
@@ -330,8 +330,8 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                                 onClick={() => toggleSection('workflow')}
                                 className="w-full px-3 py-2.5 flex items-center justify-between text-left"
                             >
-                                <span className="text-xs font-medium text-white flex items-center gap-2">
-                                    <Workflow className="text-amber-400" size={14} />
+                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
+                                    <Workflow className="text-amber-600" size={14} />
                                     Workflow Pipeline
                                 </span>
                                 <ChevronRight
@@ -372,8 +372,8 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                                 onClick={() => toggleSection('ai')}
                                 className="w-full px-3 py-2.5 flex items-center justify-between text-left"
                             >
-                                <span className="text-xs font-medium text-white flex items-center gap-2">
-                                    <Bot className="text-purple-400" size={14} />
+                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
+                                    <Bot className="text-purple-600" size={14} />
                                     AI Features
                                 </span>
                                 <ChevronRight
@@ -411,8 +411,8 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                                 onClick={() => toggleSection('python')}
                                 className="w-full px-3 py-2.5 flex items-center justify-between text-left"
                             >
-                                <span className="text-xs font-medium text-white flex items-center gap-2">
-                                    <Terminal className="text-cyan-400" size={14} />
+                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
+                                    <Terminal className="text-cyan-600" size={14} />
                                     Python Scripts
                                 </span>
                                 <ChevronRight
@@ -452,20 +452,20 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     <div className="relative">
                         {/* Screenshot */}
                         <div
-                            className="absolute inset-0 bg-contain bg-top bg-no-repeat bg-neutral-900"
+                            className="absolute inset-0 bg-contain bg-top bg-no-repeat bg-neutral-100"
                             style={{ backgroundImage: `url(${app.screenshot})` }}
                         />
-                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-40 mix-blend-overlay`} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/60 to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-neutral-900/80" />
+                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-30 mix-blend-overlay`} />
+                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/80" />
 
                         {/* Content */}
                         <div className="relative h-full flex flex-col justify-end p-8 xl:p-10">
                             <h3 className={`text-4xl xl:text-5xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-2`}>
                                 {app.name}
                             </h3>
-                            <p className="text-lg text-neutral-300 font-medium mb-4">{app.tagline}</p>
-                            <p className="text-base text-neutral-400 leading-relaxed mb-6 max-w-2xl">{app.description}</p>
+                            <p className="text-lg text-neutral-600 font-medium mb-4">{app.tagline}</p>
+                            <p className="text-base text-neutral-500 leading-relaxed mb-6 max-w-2xl">{app.description}</p>
 
                             <a
                                 href={app.link}
@@ -479,10 +479,10 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                     </div>
 
                     {/* RIGHT SIDE - Tech Stack */}
-                    <div className="bg-neutral-900/80 p-5 space-y-3 overflow-y-auto">
+                    <div className="bg-white/80 p-5 space-y-3 overflow-y-auto">
                         {/* Tech Stack Header */}
-                        <h4 className="text-sm font-bebas text-white flex items-center gap-2 border-b border-white/10 pb-2">
-                            <Layers className="text-indigo-400" size={16} />
+                        <h4 className="text-sm font-bebas text-neutral-900 flex items-center gap-2 border-b border-black/10 pb-2">
+                            <Layers className="text-indigo-600" size={16} />
                             Full Tech Stack
                         </h4>
 
@@ -653,18 +653,18 @@ export default function AppShowcase() {
                     {/* Nav Arrows */}
                     <button
                         onClick={prevSlide}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-white/10 transition-colors"
+                        className="absolute left-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-black/5 transition-colors"
                         aria-label="Previous"
                     >
-                        <ChevronLeft size={20} className="text-white" />
+                        <ChevronLeft size={20} className="text-neutral-900" />
                     </button>
 
                     <button
                         onClick={nextSlide}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-white/10 transition-colors"
+                        className="absolute right-0 top-1/2 -translate-y-1/2 z-20 p-2 glass rounded-full hover:bg-black/5 transition-colors"
                         aria-label="Next"
                     >
-                        <ChevronRight size={20} className="text-white" />
+                        <ChevronRight size={20} className="text-neutral-900" />
                     </button>
 
                     {/* Slides with swipe support */}
@@ -695,7 +695,7 @@ export default function AppShowcase() {
                                 onClick={() => goToSlide(index)}
                                 className={`h-1.5 rounded-full transition-all duration-300 ${index === activeIndex
                                     ? "w-6 bg-gradient-to-r from-indigo-500 to-purple-500"
-                                    : "w-1.5 bg-white/30 hover:bg-white/50"
+                                    : "w-1.5 bg-black/10 hover:bg-black/20"
                                     }`}
                                 aria-label={`Go to ${app.name}`}
                             />

@@ -23,7 +23,6 @@ export default function Navbar() {
         const handleScroll = () => {
             setIsScrolled(container.scrollTop > 50);
 
-            // Determine active section from scroll position
             const scrollPosition = container.scrollTop;
             const windowHeight = window.innerHeight;
 
@@ -59,7 +58,7 @@ export default function Navbar() {
             >
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
-                    <a href="#hero" className="text-2xl font-bebas text-white tracking-wider">
+                    <a href="#hero" className="text-2xl font-bebas text-neutral-900 tracking-wider">
                         ANIL<span className="text-gradient">.</span>
                     </a>
 
@@ -74,8 +73,8 @@ export default function Navbar() {
                                     key={item.label}
                                     href={item.href}
                                     className={`relative text-sm transition-colors font-mono uppercase tracking-wider ${isActive
-                                        ? "text-white"
-                                        : "text-neutral-400 hover:text-white"
+                                        ? "text-neutral-900"
+                                        : "text-neutral-500 hover:text-neutral-900"
                                         }`}
                                 >
                                     {item.label}
@@ -92,13 +91,15 @@ export default function Navbar() {
                     </nav>
 
                     {/* Mobile Toggle */}
-                    <button
-                        onClick={() => setIsMobileOpen(!isMobileOpen)}
-                        className="md:hidden p-2 text-white"
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
-                    </button>
+                    <div className="flex items-center md:hidden">
+                        <button
+                            onClick={() => setIsMobileOpen(!isMobileOpen)}
+                            className="p-2 text-neutral-900"
+                            aria-label="Toggle menu"
+                        >
+                            {isMobileOpen ? <X size={24} /> : <Menu size={24} />}
+                        </button>
+                    </div>
                 </div>
             </motion.header>
 
@@ -109,7 +110,7 @@ export default function Navbar() {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl pt-24 px-4 md:hidden"
+                        className="fixed inset-0 z-40 bg-white/95 backdrop-blur-xl pt-24 px-4 md:hidden border-b border-black/5"
                     >
                         <nav className="flex flex-col gap-6">
                             {navItems.map((item) => {
@@ -121,7 +122,7 @@ export default function Navbar() {
                                         key={item.label}
                                         href={item.href}
                                         onClick={() => setIsMobileOpen(false)}
-                                        className={`text-3xl font-bebas ${isActive ? "text-gradient" : "text-white"
+                                        className={`text-3xl font-bebas ${isActive ? "text-gradient" : "text-neutral-900"
                                             }`}
                                     >
                                         {item.label}

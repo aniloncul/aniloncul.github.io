@@ -33,7 +33,7 @@ export default function SectionIndicator({
                     aria-label={`Go to ${section.label}`}
                 >
                     {/* Tooltip */}
-                    <span className="absolute right-full mr-3 px-3 py-1 bg-neutral-800/90 backdrop-blur rounded text-xs text-white whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    <span className="absolute right-full mr-3 px-3 py-1 bg-white/90 backdrop-blur rounded text-xs text-neutral-900 whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none border border-black/5 shadow-sm">
                         {section.label}
                     </span>
                 </motion.button>

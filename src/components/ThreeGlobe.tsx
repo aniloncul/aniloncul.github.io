@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useMemo, useState } from "react";
+import React, { useRef, useMemo } from "react";
 import { useFrame, useLoader, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -15,6 +15,8 @@ export default function ThreeGlobe({ scrollProgress, activeCoords, manualRotatio
     const meshRef = useRef<THREE.Group>(null);
     const markerRef = useRef<THREE.Mesh>(null);
     const { viewport } = useThree();
+
+    const globeColor = "#ffffff";
 
     // Responsive scale
     const globeScale = useMemo(() => {
@@ -134,7 +136,7 @@ export default function ThreeGlobe({ scrollProgress, activeCoords, manualRotatio
             {/* Inner Sphere */}
             <mesh>
                 <sphereGeometry args={[1.95, 32, 32]} />
-                <meshBasicMaterial color="#000" opacity={0.9} transparent />
+                <meshBasicMaterial color={globeColor} opacity={0.9} transparent />
             </mesh>
 
             {/* Red Landmark */}

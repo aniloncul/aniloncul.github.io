@@ -58,7 +58,7 @@ function Node({ node, delay }: { node: WorkflowNode; delay: number }) {
                 cy={node.y}
                 r={18}
                 fill={`url(#grad-${node.id})`}
-                stroke="rgba(255,255,255,0.2)"
+                stroke="rgba(0,0,0,0.1)"
                 strokeWidth={1}
             />
 
@@ -84,7 +84,7 @@ function Node({ node, delay }: { node: WorkflowNode; delay: number }) {
                 x={node.x}
                 y={node.y + 32}
                 textAnchor="middle"
-                fill="#a1a1aa"
+                fill="#525252"
                 fontSize={8}
                 fontFamily="system-ui"
             >
@@ -134,14 +134,14 @@ function Connection({
             <path
                 d={path}
                 fill="none"
-                stroke="rgba(255,255,255,0.1)"
+                stroke="rgba(0,0,0,0.1)"
                 strokeWidth={1.5}
             />
 
             {/* Animated dot */}
             <motion.circle
                 r={2.5}
-                fill="#fff"
+                fill="#4f46e5"
                 opacity={0.8}
                 initial={{ "--offset-distance": "0%" } as any}
                 animate={{ "--offset-distance": "100%" } as any}

@@ -28,7 +28,7 @@ export default function HorizontalScrollWrapper({
     const x = useTransform(smoothProgress, [0, 1], ["0%", "-75%"]);
 
     return (
-        <section ref={targetRef} className="relative h-[400vh] bg-neutral-950">
+        <section ref={targetRef} className="relative h-[400vh] bg-white">
             <div className="sticky top-0 flex items-center h-screen overflow-hidden">
                 <motion.div style={{ x }} className="flex h-screen w-[400vw]">
                     {children}

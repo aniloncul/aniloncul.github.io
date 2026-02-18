@@ -97,7 +97,7 @@ function WorkflowNode({
                 </div>
 
                 {/* Label */}
-                <span className="text-[10px] text-neutral-400 text-center max-w-[60px] leading-tight">
+                <span className="text-[10px] text-neutral-600 text-center max-w-[60px] leading-tight">
                     {node.label}
                 </span>
             </motion.div>
@@ -106,11 +106,11 @@ function WorkflowNode({
             {!isLast && (
                 <div className="relative w-8 h-0.5 mx-1">
                     {/* Static line */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-white/10 rounded-full" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-black/5 rounded-full" />
 
                     {/* Traveling dot */}
                     <motion.div
-                        className="absolute w-1.5 h-1.5 rounded-full bg-white shadow-lg"
+                        className="absolute w-1.5 h-1.5 rounded-full bg-indigo-600 shadow-lg"
                         style={{ top: "-2px" }}
                         animate={{ x: [0, 28, 0] }}
                         transition={{
