@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { Github, Linkedin, Send } from "lucide-react";
 
 export default function ContactSection() {
-    const N8N_WEBHOOK_URL = "https://gratuitous-earnestine-bedraggledly.ngrok-free.dev/webhook/contact-form";
-
     const [email, setEmail] = useState("");
     const [subject, setSubject] = useState("");
     const [message, setMessage] = useState("");
@@ -17,12 +15,9 @@ export default function ContactSection() {
         setStatus("sending");
 
         try {
-            const res = await fetch(N8N_WEBHOOK_URL, {
+            const res = await fetch("/api/contact", {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "ngrok-skip-browser-warning": "true"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, subject, message }),
             });
 
@@ -107,7 +102,7 @@ export default function ContactSection() {
                         </button>
 
                         {status === "error" && (
-                            <p className="text-red-400 text-sm text-center">Failed to send. Please check the Webhook URL.</p>
+                            <p className="text-red-400 text-sm text-center">Failed to send. Please try again later.</p>
                         )}
                     </form>
 

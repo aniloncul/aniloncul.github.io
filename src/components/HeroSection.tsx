@@ -2,8 +2,7 @@
 
 import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { ArrowDown } from "lucide-react";
-import AnimatedCodeBlock from "./AnimatedCodeBlock";
+import TurkishFlagConstellation from "./TurkishFlagConstellation";
 import AnimatedWires from "./AnimatedWires";
 
 export default function HeroSection() {
@@ -25,26 +24,6 @@ export default function HeroSection() {
             {/* Animated Circuit Wires Background */}
             <AnimatedWires className="opacity-40" />
 
-            {/* Floating orbs */}
-            <motion.div
-                className="absolute w-96 h-96 rounded-full bg-indigo-500/20 blur-3xl"
-                animate={{
-                    x: [0, 100, 0],
-                    y: [0, -50, 0],
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-                style={{ top: "10%", left: "10%" }}
-            />
-            <motion.div
-                className="absolute w-80 h-80 rounded-full bg-pink-500/20 blur-3xl"
-                animate={{
-                    x: [0, -80, 0],
-                    y: [0, 80, 0],
-                }}
-                transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-                style={{ bottom: "20%", right: "15%" }}
-            />
-
             <div className="w-full max-w-[95vw] 2xl:max-w-[90vw] mx-auto px-4 lg:px-8 xl:px-12 pt-24">
                 <motion.div style={{ y, opacity }} className="relative z-10 grid lg:grid-cols-2 gap-8 lg:gap-12 xl:gap-16 2xl:gap-24 items-center">
                     {/* Left: Text Content - Left Aligned */}
@@ -56,9 +35,9 @@ export default function HeroSection() {
                             transition={{ duration: 0.8, delay: 0.2 }}
                             className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-bebas tracking-tight mb-4 lg:mb-6 xl:mb-8"
                         >
-                            <span className="text-neutral-900">I ARCHITECT</span>
+                            <span className="text-neutral-900">INTELLIGENT AGENTIC AI</span>
                             <br />
-                            <span className="text-gradient">AI OPERATING SYSTEMS</span>
+                            <span className="text-neutral-900">AUTOMATIONS</span>
                         </motion.h1>
 
                         {/* Subtitle */}
@@ -71,70 +50,55 @@ export default function HeroSection() {
                             Building the brain of your organization. I design agentic backends, orchestrate intelligent workflows, and engineer the system architecture that drives autonomy.
                         </motion.p>
 
-                        {/* CTA Buttons */}
+                        {/* Custom Long Double Arrow CTA */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.6 }}
-                            className="flex flex-col sm:flex-row gap-4 lg:gap-6"
+                            className="flex justify-start"
                         >
-                            <a
-                                href="#apps"
-                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 bg-gradient-to-r from-indigo-600 to-pink-600 rounded-2xl text-white text-base lg:text-lg xl:text-xl font-bold hover:scale-105 transition-transform shadow-lg shadow-indigo-500/25 text-center"
-                            >
-                                View My Apps
-                            </a>
-                            <a
-                                href="#contact"
-                                className="px-8 py-4 lg:px-10 lg:py-5 xl:px-12 xl:py-6 glass rounded-2xl text-neutral-900 text-base lg:text-lg xl:text-xl font-bold hover:bg-black/5 transition-colors text-center border border-black/5"
-                            >
-                                Get in Touch
+                            <a href="#apps" className="group flex flex-col items-start gap-4">
+                                <div className="relative h-20 w-12 flex items-center justify-center">
+                                    {/* The Long Line */}
+                                    <motion.div 
+                                        initial={{ height: 0 }}
+                                        animate={{ height: 60 }}
+                                        transition={{ duration: 1, delay: 1 }}
+                                        className="absolute top-0 w-px bg-neutral-400 group-hover:bg-indigo-500 transition-colors"
+                                    />
+                                    
+                                    {/* The Double Arrows */}
+                                    <motion.div
+                                        animate={{ y: [40, 52, 40] }}
+                                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                                        className="absolute top-0 flex flex-col items-center -mt-1"
+                                    >
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="text-neutral-900 group-hover:text-indigo-600 transition-colors">
+                                            <path d="M7 13L12 18L17 13" strokeLinecap="round" strokeLinejoin="round" />
+                                            <path d="M7 7L12 12L17 7" strokeLinecap="round" strokeLinejoin="round" />
+                                        </svg>
+                                    </motion.div>
+                                </div>
+                                <span className="text-[10px] font-mono text-neutral-400 uppercase tracking-[0.3em] ml-2 group-hover:text-neutral-900 transition-colors">
+                                    Scroll to Explore
+                                </span>
                             </a>
                         </motion.div>
                     </div>
 
-                    {/* Right: Animated Code Block */}
+                    {/* Right: Constellation Graph */}
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.8, delay: 0.4 }}
-                        className="hidden lg:block"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                        className="flex items-center justify-center order-first lg:order-last mb-8 lg:mb-0"
                     >
-                        <div className="relative">
-                            {/* Glow behind */}
-                            <div className="absolute -inset-4 bg-gradient-to-r from-indigo-500/20 to-pink-500/20 rounded-2xl blur-2xl" />
-
-                            {/* Animated Code Block */}
-                            <div className="relative">
-                                <AnimatedCodeBlock
-                                    typingSpeed={12}
-                                    startDelay={1000}
-                                    autoPlay={true}
-                                    showControls={true}
-                                />
-
-                                {/* Floating decoration */}
-                                <motion.div
-                                    className="absolute -top-4 -right-4 lg:-top-5 lg:-right-5 px-3 py-1 lg:px-4 lg:py-2 glass rounded-full text-xs lg:text-sm text-indigo-400 font-mono z-20"
-                                    animate={{ y: [0, -5, 0] }}
-                                    transition={{ duration: 2, repeat: Infinity }}
-                                >
-                                    TypeScript
-                                </motion.div>
-                            </div>
+                        <div className="relative w-full max-w-[400px] sm:max-w-[550px] lg:max-w-[800px] aspect-[4/5]">
+                            <TurkishFlagConstellation />
                         </div>
                     </motion.div>
                 </motion.div>
             </div>
-
-            {/* Scroll indicator */}
-            <motion.div
-                className="absolute bottom-10 left-1/2 -translate-x-1/2"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
-            >
-                <ArrowDown className="text-neutral-500" size={24} />
-            </motion.div>
         </section>
     );
 }

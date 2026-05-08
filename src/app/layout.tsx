@@ -14,8 +14,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Life as a Movie | AI Software Engineer",
-  description: "A cinematic portfolio directed by an AI Architect.",
+  title: "Anil ÖNCÜL"
 };
 
 export default function RootLayout({
