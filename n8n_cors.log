@@ -236,3 +236,22 @@ Error fetching feature flags Error [PostHogFetchNetworkError]: Network error whi
       at node:internal/deps/undici/undici:13510:13
 }
 Pruning old insights data
+2025-12-28T05:57:05.720Z [Rudder] error: Response error code: ENOTFOUND
+2025-12-28T05:57:05.724Z [Rudder] error: Error: ENOTFOUND
+getaddrinfo ENOTFOUND telemetry.n8n.io
+getaddrinfo ENOTFOUND telemetry.n8n.io
+Error fetching feature flags Error [PostHogFetchNetworkError]: Network error while fetching PostHog
+    at new PostHogFetchNetworkError (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/posthog-core/src/index.ts:41:5)
+    at PostHog.<anonymous> (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/posthog-core/src/index.ts:546:17)
+    at step (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/node_modules/tslib/tslib.es6.js:102:23)
+    at Object.throw (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/node_modules/tslib/tslib.es6.js:83:53)
+    at rejected (/Volumes/2TBSSD/anilexternal/.npm/_npx/a8a7eec953f1f314/node_modules/node_modules/tslib/tslib.es6.js:74:65) {
+  error: DOMException [TimeoutError]: The operation was aborted due to timeout
+      at node:internal/deps/undici/undici:13510:13,
+  [cause]: DOMException [TimeoutError]: The operation was aborted due to timeout
+      at node:internal/deps/undici/undici:13510:13
+}
+Pruning old insights data
+Pruning old insights data
+Pruning old insights data
+Pruning old insights data

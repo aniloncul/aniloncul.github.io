@@ -6,47 +6,8 @@ import {
     ExternalLink,
     ChevronLeft,
     ChevronRight,
-    Layers,
-    Cpu,
-    Workflow,
-    Bot,
-    Code2,
-    Database,
-    Cloud,
-    Zap,
-    GitBranch,
-    Terminal,
     Globe,
-    Server,
-    Sparkles,
 } from "lucide-react";
-import WorkflowDiagram from "./WorkflowDiagram";
-import LingoCastWorkflow from "./LingoCastWorkflow";
-import ExploresBerlinWorkflow from "./ExploresBerlinWorkflow";
-import ExamCurratorWorkflow from "./ExamCurratorWorkflow";
-
-// Tech stack icons mapping
-const techIcons: Record<string, React.ReactNode> = {
-    "Next.js": <Globe size={14} />,
-    "React": <Code2 size={14} />,
-    "TypeScript": <Terminal size={14} />,
-    "Python": <Code2 size={14} />,
-    "FastAPI": <Zap size={14} />,
-    "PostgreSQL": <Database size={14} />,
-    "Supabase": <Database size={14} />,
-    "Firebase": <Cloud size={14} />,
-    "TailwindCSS": <Layers size={14} />,
-    "Zustand": <GitBranch size={14} />,
-    "OpenAI": <Bot size={14} />,
-    "LangChain": <Sparkles size={14} />,
-    "Celery": <Workflow size={14} />,
-    "Redis": <Server size={14} />,
-    "Docker": <Cpu size={14} />,
-    "n8n": <Workflow size={14} />,
-    "Vercel": <Cloud size={14} />,
-    "AWS": <Cloud size={14} />,
-    "GCP": <Cloud size={14} />,
-};
 
 const webApps = [
     {
@@ -168,22 +129,7 @@ const webApps = [
 
 ];
 
-function TechBadge({ tech }: { tech: string }) {
-    return (
-        <div className="flex items-center gap-1 px-2 py-0.5 bg-black/5 rounded border border-black/5 hover:bg-black/10 transition-all">
-            <span className="text-indigo-600">{techIcons[tech] || <Code2 size={12} />}</span>
-            <span className="text-xs md:text-sm text-neutral-600">{tech}</span>
-        </div>
-    );
-}
-
 function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boolean }) {
-    const [expandedSection, setExpandedSection] = useState<string | null>(null);
-
-    const toggleSection = (section: string) => {
-        setExpandedSection(expandedSection === section ? null : section);
-    };
-
     return (
         <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -191,406 +137,72 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
             transition={{ duration: 0.4, ease: "easeOut" }}
             className={`relative w-full mx-auto ${isActive ? "z-10" : "z-0"}`}
         >
-            <div className="glass rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-black/10 transition-colors">
-                {/* Browser Chrome */}
-                <div className="bg-neutral-100/80 px-2 py-1.5 md:px-3 md:py-2 flex items-center gap-2 border-b border-black/5">
-                    <div className="flex gap-1 md:gap-1.5">
-                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-red-500" />
-                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-yellow-500" />
-                        <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-green-500" />
-                    </div>
-                    <div className="flex-1 mx-1 md:mx-3">
-                        <div className="bg-neutral-200/50 rounded px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] text-neutral-500 font-mono flex items-center gap-1 md:gap-1.5 truncate">
-                            <Globe size={8} className="md:w-[10px] md:h-[10px] shrink-0" />
-                            <span className="truncate">{`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
+                {/* LEFT SIDE - Browser Frame with Screenshot */}
+                <div className="w-full lg:w-[60%] glass rounded-xl md:rounded-3xl overflow-hidden border border-black/5 hover:border-black/10 transition-all duration-500 shadow-2xl">
+                    {/* Browser Chrome Header */}
+                    <div className="bg-neutral-100/80 px-3 py-2 md:px-4 md:py-3 flex items-center gap-2 border-b border-black/5">
+                        <div className="flex gap-1.5 md:gap-2">
+                            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-400/80" />
+                            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-400/80" />
+                            <div className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-400/80" />
                         </div>
+                        <div className="flex-1 mx-2 md:mx-6">
+                            <div className="bg-neutral-200/50 rounded-lg px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs text-neutral-500 font-mono flex items-center gap-2 truncate">
+                                <Globe size={12} className="shrink-0 text-neutral-400" />
+                                <span className="truncate">{`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
+                            </div>
+                        </div>
+                        {app.status === "live" && (
+                            <div className="px-2 py-1 text-[10px] md:text-xs font-bold uppercase bg-emerald-500/10 text-emerald-600 rounded-full flex items-center gap-1.5 shrink-0 border border-emerald-500/20">
+                                <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse" />
+                                Live
+                            </div>
+                        )}
                     </div>
-                    {app.status === "beta" && (
-                        <span className="px-1.5 py-0.5 text-[8px] md:text-[10px] font-bold uppercase bg-gradient-to-r from-orange-500 to-pink-500 rounded-full text-white shrink-0">
-                            Beta
-                        </span>
-                    )}
-                    {app.status === "live" && (
-                        <span className="px-1.5 py-0.5 text-[8px] md:text-[10px] font-bold uppercase bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full text-white flex items-center gap-1 shrink-0">
-                            <span className="w-1 h-1 bg-white rounded-full animate-pulse" />
-                            Live
-                        </span>
-                    )}
-                </div>
 
-                {/* MOBILE LAYOUT (< lg) - Stacked vertical layout */}
-                <div className="lg:hidden">
-                    {/* Screenshot Section - Compact for mobile */}
-                    <div className="relative h-[200px] sm:h-[250px]">
+                    {/* SCREENSHOT AREA */}
+                    <div className="relative aspect-video lg:aspect-[16/10] overflow-hidden bg-neutral-50">
                         <div
-                            className="absolute inset-0 bg-cover bg-center bg-neutral-100"
+                            className="absolute inset-0 bg-cover bg-top transition-transform duration-1000 ease-out hover:scale-105"
                             style={{ backgroundImage: `url(${app.screenshot})` }}
                         />
-                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-20 mix-blend-overlay`} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/80 to-transparent" />
-
-                        {/* Content overlay */}
-                        <div className="absolute inset-0 flex flex-col justify-end p-4">
-                            <h3 className={`text-2xl sm:text-3xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
-                                {app.name}
-                            </h3>
-                            <p className="text-xs sm:text-sm text-neutral-600 font-medium mb-2">{app.tagline}</p>
-                            <a
-                                href={app.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-xs font-medium hover:scale-105 transition-all w-fit`}
-                            >
-                                View Project <ExternalLink size={12} />
-                            </a>
-                        </div>
-                    </div>
-
-                    {/* Description - Mobile */}
-                    <div className="p-3 bg-white/90 border-t border-black/5">
-                        <p className="text-xs text-neutral-500 leading-relaxed line-clamp-3">{app.description}</p>
-                    </div>
-
-                    {/* Collapsible Tech Sections - Mobile */}
-                    <div className="bg-white/80 divide-y divide-black/5">
-                        {/* Tech Stack - Collapsed by default */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('tech')}
-                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
-                            >
-                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
-                                    <Layers className="text-indigo-600" size={14} />
-                                    Tech Stack
-                                </span>
-                                <ChevronRight
-                                    size={16}
-                                    className={`text-neutral-400 transition-transform ${expandedSection === 'tech' ? 'rotate-90' : ''}`}
-                                />
-                            </button>
-                            <AnimatePresence>
-                                {expandedSection === 'tech' && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="px-3 pb-3 grid grid-cols-2 gap-2">
-                                            <div className="glass rounded-lg p-2 border border-white/5">
-                                                <div className="text-[10px] text-indigo-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                                                    <Globe size={10} /> Frontend
-                                                </div>
-                                                <div className="flex flex-wrap gap-1">
-                                                    {app.techStack.frontend.map((tech) => (
-                                                        <TechBadge key={tech} tech={tech} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div className="glass rounded-lg p-2 border border-white/5">
-                                                <div className="text-[10px] text-emerald-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                                                    <Server size={10} /> Backend
-                                                </div>
-                                                <div className="flex flex-wrap gap-1">
-                                                    {app.techStack.backend.map((tech) => (
-                                                        <TechBadge key={tech} tech={tech} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div className="glass rounded-lg p-2 border border-white/5">
-                                                <div className="text-[10px] text-amber-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                                                    <Workflow size={10} /> Orchestration
-                                                </div>
-                                                <div className="flex flex-wrap gap-1">
-                                                    {app.techStack.orchestration.map((tech) => (
-                                                        <TechBadge key={tech} tech={tech} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div className="glass rounded-lg p-2 border border-white/5">
-                                                <div className="text-[10px] text-cyan-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
-                                                    <Cloud size={10} /> Deploy
-                                                </div>
-                                                <div className="flex flex-wrap gap-1">
-                                                    {app.techStack.deployment.map((tech) => (
-                                                        <TechBadge key={tech} tech={tech} />
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-
-                        {/* Workflow Pipeline - Collapsed */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('workflow')}
-                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
-                            >
-                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
-                                    <Workflow className="text-amber-600" size={14} />
-                                    Workflow Pipeline
-                                </span>
-                                <ChevronRight
-                                    size={16}
-                                    className={`text-neutral-400 transition-transform ${expandedSection === 'workflow' ? 'rotate-90' : ''}`}
-                                />
-                            </button>
-                            <AnimatePresence>
-                                {expandedSection === 'workflow' && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="px-3 pb-3">
-                                            <div className="glass rounded-lg p-3 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5 overflow-x-auto">
-                                                {app.id === 1 ? (
-                                                    <LingoCastWorkflow />
-                                                ) : app.id === 2 ? (
-                                                    <ExploresBerlinWorkflow />
-                                                ) : app.id === 3 ? (
-                                                    <ExamCurratorWorkflow />
-                                                ) : (
-                                                    <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
-                                                )}
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-
-                        {/* AI Features - Collapsed */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('ai')}
-                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
-                            >
-                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
-                                    <Bot className="text-purple-600" size={14} />
-                                    AI Features
-                                </span>
-                                <ChevronRight
-                                    size={16}
-                                    className={`text-neutral-400 transition-transform ${expandedSection === 'ai' ? 'rotate-90' : ''}`}
-                                />
-                            </button>
-                            <AnimatePresence>
-                                {expandedSection === 'ai' && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="px-3 pb-3">
-                                            <ul className="space-y-1.5">
-                                                {app.aiFeatures.map((feature, idx) => (
-                                                    <li key={idx} className="flex items-start gap-1.5 text-xs text-neutral-400">
-                                                        <Sparkles size={12} className="text-purple-400 mt-0.5 shrink-0" />
-                                                        {feature}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
-
-                        {/* Python Scripts - Collapsed */}
-                        <div>
-                            <button
-                                onClick={() => toggleSection('python')}
-                                className="w-full px-3 py-2.5 flex items-center justify-between text-left"
-                            >
-                                <span className="text-xs font-medium text-neutral-900 flex items-center gap-2">
-                                    <Terminal className="text-cyan-600" size={14} />
-                                    Python Scripts
-                                </span>
-                                <ChevronRight
-                                    size={16}
-                                    className={`text-neutral-400 transition-transform ${expandedSection === 'python' ? 'rotate-90' : ''}`}
-                                />
-                            </button>
-                            <AnimatePresence>
-                                {expandedSection === 'python' && (
-                                    <motion.div
-                                        initial={{ height: 0, opacity: 0 }}
-                                        animate={{ height: 'auto', opacity: 1 }}
-                                        exit={{ height: 0, opacity: 0 }}
-                                        transition={{ duration: 0.2 }}
-                                        className="overflow-hidden"
-                                    >
-                                        <div className="px-3 pb-3">
-                                            <ul className="space-y-1.5">
-                                                {app.pythonScripts.map((script, idx) => (
-                                                    <li key={idx} className="flex items-start gap-1.5 text-xs text-neutral-400">
-                                                        <Code2 size={12} className="text-cyan-400 mt-0.5 shrink-0" />
-                                                        {script}
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-                        </div>
                     </div>
                 </div>
 
-                {/* DESKTOP LAYOUT (>= lg) - Split view */}
-                <div className="hidden lg:grid lg:grid-cols-2 min-h-[500px] xl:min-h-[550px] 2xl:min-h-[600px]">
-                    {/* LEFT SIDE - Web App Preview */}
-                    <div className="relative">
-                        {/* Screenshot */}
-                        <div
-                            className="absolute inset-0 bg-contain bg-top bg-no-repeat bg-neutral-100"
-                            style={{ backgroundImage: `url(${app.screenshot})` }}
-                        />
-                        <div className={`absolute inset-0 bg-gradient-to-br ${app.gradient} opacity-30 mix-blend-overlay`} />
-                        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/60 to-transparent" />
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-white/80" />
-
-                        {/* Content */}
-                        <div className="relative h-full flex flex-col justify-end p-8 xl:p-10">
-                            <h3 className={`text-4xl xl:text-5xl font-bebas text-transparent bg-clip-text bg-gradient-to-r ${app.gradient} mb-2`}>
-                                {app.name}
-                            </h3>
-                            <p className="text-lg text-neutral-600 font-medium mb-4">{app.tagline}</p>
-                            <p className="text-base text-neutral-500 leading-relaxed mb-6 max-w-2xl">{app.description}</p>
-
-                            <a
-                                href={app.link}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className={`inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r ${app.gradient} rounded-lg text-white text-base font-medium hover:shadow-lg hover:scale-105 transition-all w-fit`}
-                            >
-                                View Project <ExternalLink size={20} />
-                            </a>
-                        </div>
+                {/* RIGHT SIDE - Project Info (Outside Frame) */}
+                <div className="w-full lg:w-[40%] flex flex-col space-y-6 lg:space-y-8 p-2 lg:p-0">
+                    <div className="space-y-2 lg:space-y-4">
+                        <h3 className={`text-4xl sm:text-5xl lg:text-7xl font-bebas tracking-tight text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
+                            {app.name}
+                        </h3>
+                        <p className="text-xl sm:text-2xl lg:text-3xl text-neutral-800 font-semibold leading-tight">
+                            {app.tagline}
+                        </p>
                     </div>
 
-                    {/* RIGHT SIDE - Tech Stack */}
-                    <div className="bg-white/80 p-5 space-y-3 overflow-y-auto">
-                        {/* Tech Stack Header */}
-                        <h4 className="text-sm font-bebas text-neutral-900 flex items-center gap-2 border-b border-black/10 pb-2">
-                            <Layers className="text-indigo-600" size={16} />
-                            Full Tech Stack
-                        </h4>
+                    <p className="text-base sm:text-lg lg:text-xl text-neutral-500 leading-relaxed max-w-2xl font-light">
+                        {app.description}
+                    </p>
 
-                        {/* Tech Categories Grid */}
-                        <div className="grid grid-cols-2 gap-2">
-                            {/* Frontend */}
-                            <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Globe size={14} /> Frontend
-                                </div>
-                                <div className="flex flex-wrap gap-1">
-                                    {app.techStack.frontend.map((tech) => (
-                                        <TechBadge key={tech} tech={tech} />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Backend */}
-                            <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm text-emerald-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Server size={14} /> Backend
-                                </div>
-                                <div className="flex flex-wrap gap-1">
-                                    {app.techStack.backend.map((tech) => (
-                                        <TechBadge key={tech} tech={tech} />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Orchestration */}
-                            <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Workflow size={14} /> Orchestration
-                                </div>
-                                <div className="flex flex-wrap gap-1">
-                                    {app.techStack.orchestration.map((tech) => (
-                                        <TechBadge key={tech} tech={tech} />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Deployment */}
-                            <div className="glass rounded-lg p-2 border border-white/5">
-                                <div className="text-sm text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Cloud size={14} /> Deployment
-                                </div>
-                                <div className="flex flex-wrap gap-1">
-                                    {app.techStack.deployment.map((tech) => (
-                                        <TechBadge key={tech} tech={tech} />
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Workflow Diagram */}
-                        <div className="glass rounded-lg p-4 border border-white/5 bg-gradient-to-r from-amber-500/5 to-orange-500/5 min-h-[140px]">
-                            <div className="text-sm text-amber-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                <Workflow size={14} /> Workflow Pipeline
-                            </div>
-                            {app.id === 1 ? (
-                                <LingoCastWorkflow />
-                            ) : app.id === 2 ? (
-                                <ExploresBerlinWorkflow />
-                            ) : app.id === 3 ? (
-                                <ExamCurratorWorkflow />
-                            ) : (
-                                <WorkflowDiagram nodes={app.workflowNodes} gradient={app.gradient} />
-                            )}
-                        </div>
-
-                        {/* AI & Python Grid */}
-                        <div className="grid grid-cols-2 gap-2">
-                            {/* AI Features */}
-                            <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-purple-500/5 to-pink-500/5">
-                                <div className="text-sm text-purple-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Bot size={14} /> AI Features
-                                </div>
-                                <ul className="space-y-1">
-                                    {app.aiFeatures.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-sm text-neutral-400">
-                                            <Sparkles size={14} className="text-purple-400 mt-0.5 shrink-0" />
-                                            {feature}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-
-                            {/* Python Scripts */}
-                            <div className="glass rounded-lg p-2 border border-white/5 bg-gradient-to-r from-blue-500/5 to-cyan-500/5">
-                                <div className="text-sm text-cyan-400 uppercase tracking-wider mb-2 flex items-center gap-1">
-                                    <Terminal size={14} /> Python Scripts
-                                </div>
-                                <ul className="space-y-1">
-                                    {app.pythonScripts.map((script, idx) => (
-                                        <li key={idx} className="flex items-start gap-1 text-sm text-neutral-400">
-                                            <Code2 size={14} className="text-cyan-400 mt-0.5 shrink-0" />
-                                            {script}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
-                        </div>
+                    <div className="pt-4 lg:pt-6">
+                        <a
+                            href={app.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className={`group inline-flex items-center gap-3 px-8 py-4 lg:px-12 lg:py-6 bg-gradient-to-r ${app.gradient} rounded-2xl text-white text-lg lg:text-2xl font-bold shadow-2xl shadow-indigo-500/20 hover:shadow-indigo-500/40 hover:-translate-y-1 transition-all duration-300 w-fit`}
+                        >
+                            <span>View Project</span>
+                            <ExternalLink size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                        </a>
                     </div>
                 </div>
             </div>
         </motion.div>
     );
 }
+
+
 
 export default function AppShowcase() {
     const [activeIndex, setActiveIndex] = useState(0);
