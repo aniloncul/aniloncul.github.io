@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, JetBrains_Mono } from "next/font/google";
+import { Bebas_Neue, JetBrains_Mono, Goldman } from "next/font/google";
 import "./globals.css";
 
 const bebasNeue = Bebas_Neue({
@@ -11,6 +11,12 @@ const bebasNeue = Bebas_Neue({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
+});
+
+const goldman = Goldman({
+  weight: ["400", "700"],
+  subsets: ["latin"],
+  variable: "--font-goldman",
 });
 
 export const metadata: Metadata = {
@@ -25,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${bebasNeue.variable} ${jetbrainsMono.variable} antialiased overflow-x-hidden`}
+        className={`${bebasNeue.variable} ${jetbrainsMono.variable} ${goldman.variable} antialiased overflow-x-hidden`}
       >
         {children}
       </body>

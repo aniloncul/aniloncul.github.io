@@ -10,7 +10,10 @@
 }
 
 @theme {
-    --font-heading: var(--font-bebas), system-ui, sans-serif;
+    --font-bebas: var(--font-bebas), sans-serif;
+    --font-goldman: var(--font-goldman), sans-serif;
+    --font-mono: var(--font-mono), monospace;
+    --font-heading: var(--font-bebas), sans-serif;
     --font-body: var(--font-mono), monospace;
 }
 
@@ -20,6 +23,18 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+    }
+
+    .goldman-regular {
+        font-family: var(--font-goldman), sans-serif;
+        font-weight: 400;
+        font-style: normal;
+    }
+
+    .goldman-bold {
+        font-family: var(--font-goldman), sans-serif;
+        font-weight: 700;
+        font-style: normal;
     }
 
     .glass {

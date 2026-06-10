@@ -12,6 +12,81 @@ import {
 const webApps = [
     {
         id: 1,
+        name: "Metavocab",
+        tagline: "Tailor-Made Language Fluency",
+        description: "Metavocab offers an innovative way to learn languages with AI Agents that are customized by your needs. They are your personalized language learning coaches that use your preferences to generate personalized learning materials and adapt to your learning style.",
+        gradient: "from-emerald-500 via-teal-500 to-cyan-600",
+        screenshot: "/screenshots/ss_metavocab.png",
+        status: "live",
+        link: "https://metavocab.com",
+        techStack: {
+            frontend: ["Vanilla JS", "CSS3", "HTML5"],
+            backend: ["Python", "Flask", "Supabase"],
+            ai: ["Gemini 1.5 Flash", "Vertex AI", "Fine-Tuned Endpoint"],
+            orchestration: ["Regex", "Pandas", "PyMuPDF"],
+            deployment: ["Docker", "Google Cloud Run"]
+        },
+        workflowDescription: "Official YDS exam PDFs (German, English, French, Russian) are parsed using advanced Regex patterns to extract structured question data. This clean dataset fine-tunes Gemini models via Vertex AI to replicate specific question styles and difficulty. The Flask backend orchestrates generation requests with Supabase handling user auth and performance tracking.",
+        aiFeatures: [
+            "Domain-Specific Fine-Tuning: Custom Gemini model trained on 500+ official YDS questions to replicate difficulty, distractor logic, and linguistic patterns.",
+            "Contextual Explanations: AI-generated explanations for each question, breaking down grammar rules and vocabulary in the target language.",
+            "Performance Analytics Agent: Tracks user answers to identify weak categories, recommend study areas, and build personalized vocabulary lists."
+        ],
+        pythonScripts: [
+            "PDF Parsing & Structure Extraction (pdf_extractor.py)",
+            "Dataset Cleaning & JSONL Formatting for Vertex AI",
+            "Quiz Data Generation & Enrichment Pipeline"
+        ],
+        workflowNodes: [
+            { id: "1", label: "YDS PDFs", icon: "pdf" },
+            { id: "2", label: "Regex Extraction", icon: "regex" },
+            { id: "3", label: "Dataset (JSONL)", icon: "json" },
+            { id: "4", label: "Vertex AI Tuning", icon: "cloud" },
+            { id: "5", label: "Exam Generation", icon: "gemini" },
+            { id: "6", label: "Interactive UI", icon: "browser" }
+        ]
+    },
+    {
+        id: 2,
+        name: "Explores.Berlin",
+        tagline: "AI-Augmented Event Discovery Platform",
+        description:
+            "A curated, interactive map application for discovering underground events, exhibitions, and techno culture in Berlin. Features LLM-guided web scraping, semantic classification, and a split-panel UI with Google Maps integration.",
+        gradient: "from-zinc-800 via-neutral-900 to-yellow-500",
+        screenshot: "/screenshots/exploresberlin.png",
+        status: "live",
+        link: "https://explores-berlin.com/",
+        techStack: {
+            frontend: ["Next.js 14", "React 19", "TailwindCSS", "Zustand", "Google Maps API"],
+            backend: ["Node.js", "Supabase PostgreSQL"],
+            ai: ["LLM Web Scraping", "Semantic Classification"],
+            orchestration: ["ETL Scripts", "useMemo Pipeline"],
+            deployment: ["Vercel", "Supabase"],
+        },
+        workflowDescription:
+            "Event Sites → LLM Scraper → CSV Data → LLM Classification → Node.js ETL → Supabase → Next.js → Maps UI",
+        aiFeatures: [
+            "'Plan my Saturday' → AI generates full-day itinerary",
+            "Multi-stop route optimization on interactive map",
+            "Time-aware scheduling (opening hours, travel time)",
+            "AI curator: historical context & hidden gems for each stop",
+        ],
+        pythonScripts: [
+            "LLM-guided web scraping that adapts to layout changes",
+            "Zero-shot event categorization (Techno, Exhibition, Dining)",
+            "Real-time geocoding with Berlin neighborhood mapping",
+            "Autonomous ETL pipeline to Supabase PostgreSQL",
+        ],
+        workflowNodes: [
+            { id: "1", label: "Web Scraper", icon: "python" },
+            { id: "2", label: "LLM Parse", icon: "gemini" },
+            { id: "3", label: "Classify", icon: "openai" },
+            { id: "4", label: "Supabase", icon: "supabase" },
+            { id: "5", label: "Next.js", icon: "nextjs" },
+        ],
+    },
+    {
+        id: 3,
         name: "LingoCast",
         tagline: "AI-Powered Language Learning Podcast Generator",
         description:
@@ -50,82 +125,6 @@ const webApps = [
             { id: "6", label: "Supabase", icon: "supabase" },
         ],
     },
-    {
-        id: 2,
-        name: "Explores.Berlin",
-        tagline: "AI-Augmented Event Discovery Platform",
-        description:
-            "A curated, interactive map application for discovering underground events, exhibitions, and techno culture in Berlin. Features LLM-guided web scraping, semantic classification, and a split-panel UI with Google Maps integration.",
-        gradient: "from-zinc-800 via-neutral-900 to-yellow-500",
-        screenshot: "/screenshots/exploresberlin.png",
-        status: "live",
-        link: "https://explores-berlin.vercel.app/",
-        techStack: {
-            frontend: ["Next.js 14", "React 19", "TailwindCSS", "Zustand", "Google Maps API"],
-            backend: ["Node.js", "Supabase PostgreSQL"],
-            ai: ["LLM Web Scraping", "Semantic Classification"],
-            orchestration: ["ETL Scripts", "useMemo Pipeline"],
-            deployment: ["Vercel", "Supabase"],
-        },
-        workflowDescription:
-            "Event Sites → LLM Scraper → CSV Data → LLM Classification → Node.js ETL → Supabase → Next.js → Maps UI",
-        aiFeatures: [
-            "'Plan my Saturday' → AI generates full-day itinerary",
-            "Multi-stop route optimization on interactive map",
-            "Time-aware scheduling (opening hours, travel time)",
-            "AI curator: historical context & hidden gems for each stop",
-        ],
-        pythonScripts: [
-            "LLM-guided web scraping that adapts to layout changes",
-            "Zero-shot event categorization (Techno, Exhibition, Dining)",
-            "Real-time geocoding with Berlin neighborhood mapping",
-            "Autonomous ETL pipeline to Supabase PostgreSQL",
-        ],
-        workflowNodes: [
-            { id: "1", label: "Web Scraper", icon: "python" },
-            { id: "2", label: "LLM Parse", icon: "gemini" },
-            { id: "3", label: "Classify", icon: "openai" },
-            { id: "4", label: "Supabase", icon: "supabase" },
-            { id: "5", label: "Next.js", icon: "nextjs" },
-        ],
-    },
-    {
-        "id": 3,
-        "name": "ExamCurrator",
-        "tagline": "Master Language Exams with Fine-Tuned AI",
-        "description": "An adaptive preparation platform for standardized language exams (Goethe, TOEFL, IELTS). It transforms static study materials into dynamic, exam-grade practice questions using custom fine-tuned LLMs.",
-        "gradient": "from-emerald-500 via-teal-500 to-cyan-600",
-        "screenshot": "/screenshots/examcurrator.png",
-        "status": "live",
-        "link": "https://examcurrator-960123097756.europe-west4.run.app/",
-        "techStack": {
-            "frontend": ["Vanilla JS", "CSS3", "HTML5"],
-            "backend": ["Python", "Flask", "Supabase"],
-            "ai": ["Gemini 1.5 Flash", "Vertex AI", "Fine-Tuned Endpoint"],
-            "orchestration": ["Regex", "Pandas", "PyMuPDF"],
-            "deployment": ["Docker", "Google Cloud Run"]
-        },
-        "workflowDescription": "Official YDS exam PDFs (German, English, French, Russian) are parsed using advanced Regex patterns to extract structured question data. This clean dataset fine-tunes Gemini models via Vertex AI to replicate specific question styles and difficulty. The Flask backend orchestrates generation requests with Supabase handling user auth and performance tracking.",
-        "aiFeatures": [
-            "Domain-Specific Fine-Tuning: Custom Gemini model trained on 500+ official YDS questions to replicate difficulty, distractor logic, and linguistic patterns.",
-            "Contextual Explanations: AI-generated explanations for each question, breaking down grammar rules and vocabulary in the target language.",
-            "Performance Analytics Agent: Tracks user answers to identify weak categories, recommend study areas, and build personalized vocabulary lists."
-        ],
-        "pythonScripts": [
-            "PDF Parsing & Structure Extraction (pdf_extractor.py)",
-            "Dataset Cleaning & JSONL Formatting for Vertex AI",
-            "Quiz Data Generation & Enrichment Pipeline"
-        ],
-        "workflowNodes": [
-            { "id": "1", "label": "YDS PDFs", "icon": "pdf" },
-            { "id": "2", "label": "Regex Extraction", "icon": "regex" },
-            { "id": "3", "label": "Dataset (JSONL)", "icon": "json" },
-            { "id": "4", "label": "Vertex AI Tuning", "icon": "cloud" },
-            { "id": "5", "label": "Exam Generation", "icon": "gemini" },
-            { "id": "6", "label": "Interactive UI", "icon": "browser" }
-        ]
-
-    },
 
 ];
 
@@ -150,7 +149,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                         <div className="flex-1 mx-2 md:mx-6">
                             <div className="bg-neutral-200/50 rounded-lg px-3 py-1 md:px-4 md:py-1.5 text-[10px] md:text-xs text-neutral-500 font-mono flex items-center gap-2 truncate">
                                 <Globe size={12} className="shrink-0 text-neutral-400" />
-                                <span className="truncate">{`https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
+                                <span className="truncate">{app.name === "Metavocab" ? "https://metavocab.com" : `https://${app.name.toLowerCase().replace(/\s/g, "")}.dev`}</span>
                             </div>
                         </div>
                         {app.status === "live" && (
@@ -173,7 +172,7 @@ function CarouselCard({ app, isActive }: { app: typeof webApps[0]; isActive: boo
                 {/* RIGHT SIDE - Project Info (Outside Frame) */}
                 <div className="w-full lg:w-[40%] flex flex-col space-y-6 lg:space-y-8 p-2 lg:p-0">
                     <div className="space-y-2 lg:space-y-4">
-                        <h3 className={`text-4xl sm:text-5xl lg:text-7xl font-bebas tracking-tight text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
+                        <h3 className={`text-4xl sm:text-5xl lg:text-7xl ${app.name === "Metavocab" ? "font-goldman" : "font-bebas"} tracking-tight text-transparent bg-clip-text bg-gradient-to-r ${app.gradient}`}>
                             {app.name}
                         </h3>
                         <p className="text-xl sm:text-2xl lg:text-3xl text-neutral-800 font-semibold leading-tight">
