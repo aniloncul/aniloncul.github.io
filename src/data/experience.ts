@@ -22,12 +22,12 @@ export const experiences: Experience[] = [
     },
     {
         id: "my-group",
-        role: "Business Analyst",
+        role: "Business Process Automation Manager",
         company: "My Group GmbH",
         location: "Berlin (on-site)",
         coordinates: [52.52, 13.405],
         period: "Jun 2025 - Dec 2025",
-        summary: "Engineered custom warehouse systems and route optimization engines to drastically reduce operational errors and delivery times.",
+        summary: "Lead the digital transformation of manual processes by identifying, designing, and deploying end-to-end automation solutions through cross-functional collaboration.",
         type: "work"
     },
     {
